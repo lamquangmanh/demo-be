@@ -3,14 +3,6 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true,
-    "assets": [
-      {
-        "include": "hero/hero.proto",
-        "watchAssets": true
-      }
-    ],
-    "plugins": [
-    ]
+    "deleteOutDir": true
   }
 }
