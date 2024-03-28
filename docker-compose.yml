@@ -8,8 +8,6 @@ services:
     ports:
       - '3002:3000'
     # env_file:
-    #   - ${ENV_PATH}/bff/.env
+    #   - ${ENV_PATH}/backend/.env
 networks:
   intranet:
-
-
