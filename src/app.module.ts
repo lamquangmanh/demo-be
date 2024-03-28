@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { UserEntity, PaymentEntity } from './models';
+import { UserEntity } from './models';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UserModule } from './user';
 
 @Module({
   imports: [
@@ -14,9 +15,10 @@ import { AppService } from './app.service';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DB,
-      entities: [UserEntity, PaymentEntity],
+      entities: [UserEntity],
       synchronize: true,
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

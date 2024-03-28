@@ -3,34 +3,32 @@ import { IsOptional, IsString } from 'class-validator';
 
 export class PaginationDto {
   @ApiProperty({
-    description: 'Paginate: offset param. Example: /users?offset=10',
+    description: 'Paginate: page param. Example: /users?page=10',
     required: false,
     default: 0,
   })
   @IsOptional()
   // @IsString()
-  offset: string = '0';
+  page: string = '0';
 
   @ApiProperty({
-    description: 'Paginate: limit param. Example: /users?limit=10',
+    description: 'Paginate: pageSize param. Example: /users?pageSize=10',
     required: false,
     default: 10,
   })
   @IsOptional()
   // @IsString()
-  limit: string = '10';
+  pageSize: string = '10';
 
   @ApiProperty({
-    description:
-      'Search by ids. Example: /users?ids=1,2,4,5. Example in body: {ids: [1,2,3]}',
+    description: 'Search by ids. Example: /users?ids=1,2,4,5. Example in body: {ids: [1,2,3]}',
     required: false,
   })
   @IsOptional()
   ids: any;
 
   @ApiProperty({
-    description:
-      'Example: /users?sort=name_desc,createdAt_asc . default sort by createdAt desc',
+    description: 'Example: /users?sort=name_desc,createdAt_asc . default sort by createdAt desc',
     required: false,
   })
   @IsOptional()
@@ -44,12 +42,12 @@ export class PaginationDto {
     return ids;
   }
 
-  getOffset() {
-    return Number(this.offset || 0);
+  getPage() {
+    return Number(this.page || 0);
   }
 
-  getLimit() {
-    return Number(this.limit || 10);
+  getPageSize() {
+    return Number(this.pageSize || 10);
   }
 
   getSort() {
@@ -73,8 +71,8 @@ export class PaginationDto {
 
   getOptions() {
     return {
-      offset: this.getOffset(),
-      limit: this.getLimit(),
+      page: this.getPage(),
+      pageSize: this.getPageSize(),
       sort: this.getSort(),
       fields: null,
     };

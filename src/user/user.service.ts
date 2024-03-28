@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { UserRepository } from '../models';
 import { UserDto } from './dtos';

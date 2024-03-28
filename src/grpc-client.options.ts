@@ -6,10 +6,8 @@ export const grpcClientOptions: ClientOptions = {
   transport: Transport.GRPC,
   options: {
     url: 'localhost:5001',
-    package: ['hero'],
-    protoPath: [
-      join(__dirname, './hero/hero.proto'),
-    ],
+    package: ['user'],
+    protoPath: [join(__dirname, './common/proto/user.proto')],
     onLoadPackageDefinition: (pkg, server) => {
       new ReflectionService(pkg).addToServer(server);
     },

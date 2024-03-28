@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package base;
+
+message Success {
+
+}
+
+message Pagination {
+    int32 pageSize = 1;
+    int32 page = 2;
+    int32 total = 3;
+}
+
+message GetRequest {
+    int32 id = 1;
+}
+
+
+message ListRequest {
+    int32 pageSize = 1;
+    int32 page = 2;
+    repeated string ids = 3;
+    string sort = 4;
+}

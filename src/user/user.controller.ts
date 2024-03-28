@@ -1,4 +1,5 @@
-import { Controller, Get, Inject, Req } from '@nestjs/common';
+import { Controller, Inject, Req } from '@nestjs/common';
+import { GrpcMethod } from '@nestjs/microservices';
 
 import { UserService } from './user.service';
 import { UserDto } from './dtos';
@@ -8,7 +9,7 @@ export class UserController {
   @Inject()
   private service: UserService;
 
-  @Get('/me')
+  @GrpcMethod('HeroesService', 'FindOne')
   async me(@Req() req: any): Promise<UserDto | null> {
     return this.service.getUser(req.user.id);
   }

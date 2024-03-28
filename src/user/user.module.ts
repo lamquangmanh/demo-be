@@ -6,9 +6,7 @@ import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
 @Module({
-  imports: [
-    SharedModule,
-  ],
+  imports: [SharedModule],
   controllers: [UserController],
   providers: [UserService, UserRepository],
 })
