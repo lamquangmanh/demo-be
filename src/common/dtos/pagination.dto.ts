@@ -42,11 +42,11 @@ export class PaginationDto {
     return ids;
   }
 
-  getPage() {
-    return Number(this.page || 0);
+  getSkip() {
+    return Number(this.page || 0) * this.getLimit();
   }
 
-  getPageSize() {
+  getLimit() {
     return Number(this.pageSize || 10);
   }
 
@@ -71,10 +71,10 @@ export class PaginationDto {
 
   getOptions() {
     return {
-      page: this.getPage(),
-      pageSize: this.getPageSize(),
-      sort: this.getSort(),
-      fields: null,
+      where: { ids: this.getIds() },
+      skip: this.getSkip(),
+      limit: this.getLimit(),
+      order: this.getSort(),
     };
   }
 }
