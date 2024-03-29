@@ -38,10 +38,7 @@ export class BaseRepository<T> {
   }
 
   async delete(entities?: any) {
-    return this.repository.save({
-      ...entities,
-      deleted_at: new Date(),
-    });
+    return this.repository.delete(entities);
   }
 
   async increment(filter: any, field: string, value: number) {
