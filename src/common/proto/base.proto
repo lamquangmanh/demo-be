@@ -2,8 +2,12 @@ syntax = "proto3";
 
 package base;
 
-message Success {
+message UpdateSuccess {
+    int32 modifiedCount = 1;
+}
 
+message DeleteSuccess {
+    int32 deletedCount = 1;
 }
 
 message Pagination {

@@ -1,7 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
+import { FindManyOptions } from 'typeorm';
 
 export class PaginationDto {
+  constructor(data: PaginationDto) {
+    this.ids = data.ids;
+    this.page = data.page;
+    this.pageSize = data.pageSize;
+    this.sort = data.sort;
+  }
   @ApiProperty({
     description: 'Paginate: page param. Example: /users?page=10',
     required: false,
@@ -36,22 +43,22 @@ export class PaginationDto {
   sort: any = 'updatedAt_desc';
 
   getIds() {
-    let ids: any = [];
+    let ids: any;
     if (typeof this.ids === 'string' && this.ids) ids = this.ids.split(',');
     if (Array.isArray(this.ids)) ids = this.ids;
     return ids;
   }
 
   getSkip() {
-    return Number(this.page || 0) * this.getLimit();
+    return Number(this.page || 0) * this.getTake();
   }
 
-  getLimit() {
+  getTake() {
     return Number(this.pageSize || 10);
   }
 
   getSort() {
-    let sort: any = { _id: -1 };
+    let sort: any = { id: 'ASC' };
 
     if (this.sort) {
       const fields = this.sort.split(',');
@@ -69,11 +76,11 @@ export class PaginationDto {
     return sort;
   }
 
-  getOptions() {
+  getOptions(): FindManyOptions {
     return {
       where: { ids: this.getIds() },
       skip: this.getSkip(),
-      limit: this.getLimit(),
+      take: this.getTake(),
       order: this.getSort(),
     };
   }

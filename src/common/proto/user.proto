@@ -5,20 +5,20 @@ package user;
 import "base.proto";
 
 service UsersService {
-  rpc Create (User) returns (base.Success) {}
+  rpc Create (User) returns (User) {}
   rpc Get (base.GetRequest) returns (User) {}
   rpc List (base.ListRequest) returns (Users) {}
-  rpc Update (User) returns (base.Success) {}
-  rpc Delete (User) returns (base.Success) {}
+  rpc Update (User) returns (base.UpdateSuccess) {}
+  rpc Delete (User) returns (base.DeleteSuccess) {}
 }
 
 message User {
-  string id = 1;
+  int32 id = 1;
   string name = 2;
   string username = 3;
 }
 
 message Users {
-    repeated User users = 1;
-    base.Pagination pagination = 2;
+    repeated User data = 1;
+    int32 total = 2;
 }
