@@ -1,36 +1,41 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
+import { FindManyOptions } from 'typeorm';
 
 export class PaginationDto {
+  constructor(data: PaginationDto) {
+    this.ids = data.ids;
+    this.page = data.page;
+    this.pageSize = data.pageSize;
+    this.sort = data.sort;
+  }
   @ApiProperty({
-    description: 'Paginate: offset param. Example: /users?offset=10',
+    description: 'Paginate: page param. Example: /users?page=10',
     required: false,
     default: 0,
   })
   @IsOptional()
   // @IsString()
-  offset: string = '0';
+  page: string = '0';
 
   @ApiProperty({
-    description: 'Paginate: limit param. Example: /users?limit=10',
+    description: 'Paginate: pageSize param. Example: /users?pageSize=10',
     required: false,
     default: 10,
   })
   @IsOptional()
   // @IsString()
-  limit: string = '10';
+  pageSize: string = '10';
 
   @ApiProperty({
-    description:
-      'Search by ids. Example: /users?ids=1,2,4,5. Example in body: {ids: [1,2,3]}',
+    description: 'Search by ids. Example: /users?ids=1,2,4,5. Example in body: {ids: [1,2,3]}',
     required: false,
   })
   @IsOptional()
   ids: any;
 
   @ApiProperty({
-    description:
-      'Example: /users?sort=name_desc,createdAt_asc . default sort by createdAt desc',
+    description: 'Example: /users?sort=name_desc,createdAt_asc . default sort by createdAt desc',
     required: false,
   })
   @IsOptional()
@@ -38,22 +43,22 @@ export class PaginationDto {
   sort: any = 'updatedAt_desc';
 
   getIds() {
-    let ids: any = [];
+    let ids: any;
     if (typeof this.ids === 'string' && this.ids) ids = this.ids.split(',');
     if (Array.isArray(this.ids)) ids = this.ids;
     return ids;
   }
 
-  getOffset() {
-    return Number(this.offset || 0);
+  getSkip() {
+    return Number(this.page || 0) * this.getTake();
   }
 
-  getLimit() {
-    return Number(this.limit || 10);
+  getTake() {
+    return Number(this.pageSize || 10);
   }
 
   getSort() {
-    let sort: any = { _id: -1 };
+    let sort: any = { id: 'ASC' };
 
     if (this.sort) {
       const fields = this.sort.split(',');
@@ -71,12 +76,12 @@ export class PaginationDto {
     return sort;
   }
 
-  getOptions() {
+  getOptions(): FindManyOptions {
     return {
-      offset: this.getOffset(),
-      limit: this.getLimit(),
-      sort: this.getSort(),
-      fields: null,
+      where: { ids: this.getIds() },
+      skip: this.getSkip(),
+      take: this.getTake(),
+      order: this.getSort(),
     };
   }
 }

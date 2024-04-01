@@ -6,7 +6,7 @@
     "deleteOutDir": true,
     "assets": [
       {
-        "include": "hero/hero.proto",
+        "include": "**/*.proto",
         "watchAssets": true
       }
     ],

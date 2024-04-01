@@ -13,8 +13,7 @@ export class ResponseSuccessDto<T> {
   total: number = 0;
 
   @ApiProperty({
-    description:
-      'Data is object or array. Return array if get many, return object if get one.',
+    description: 'Data is object or array. Return array if get many, return object if get one.',
   })
   data: T;
 }

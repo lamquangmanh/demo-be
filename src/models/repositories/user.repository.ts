@@ -10,5 +10,5 @@ export class UserRepository extends BaseRepository<UserEntity> {
   @InjectRepository(UserEntity)
   public repository: Repository<UserEntity>;
 
-  async pagination() {}
+  // async pagination() {}
 }
