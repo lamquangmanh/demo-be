@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDefined } from 'class-validator';
 
-export class GetOneDto {
+export class IGetOne {
   @ApiProperty({
     description: 'id is mongo id',
   })

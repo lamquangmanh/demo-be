@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class ResponseSuccessDto<T> {
+export class IResponseSuccess<T> {
   constructor(params: any) {
     // object.assign will overwrite defaults if params exist
     Object.assign(this, params);

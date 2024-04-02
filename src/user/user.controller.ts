@@ -2,7 +2,7 @@ import { Controller, Inject } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 
 import { UserService } from './user.service';
-import { UserDto } from './dtos';
+import { UserDto } from '../domain/entities';
 import { DeleteSuccessDto, GetOneDto, PaginationDto, ResponseSuccessDto, UpdateSuccessDto } from 'src/common';
 
 @Controller('users')

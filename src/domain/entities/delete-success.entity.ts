@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class DeleteSuccessDto {
+export class IDeleteSuccess {
   @ApiProperty({
     description: 'deleted count',
   })

@@ -2,8 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 import { FindManyOptions } from 'typeorm';
 
-export class PaginationDto {
-  constructor(data: PaginationDto) {
+export class IPagination {
+  constructor(data: IPagination) {
     this.ids = data.ids;
     this.page = data.page;
     this.pageSize = data.pageSize;

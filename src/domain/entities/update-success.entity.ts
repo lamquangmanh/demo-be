@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateSuccessDto {
+export class IUpdateSuccess {
   @ApiProperty({
     description: 'number of modified',
   })

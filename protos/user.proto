@@ -19,6 +19,6 @@ message User {
 }
 
 message Users {
-    repeated User data = 1;
-    int32 total = 2;
+  repeated User data = 1;
+  int32 total = 2;
 }
