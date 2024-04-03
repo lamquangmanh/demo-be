@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - name: Checkout develop branch
-    - uses: actions/checkout@v3
+      uses: actions/checkout@v3
 
     - name: Setup Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -28,10 +28,10 @@ jobs:
         cache: 'npm'
 
     - name: Install dependencies
-    - run: npm i
+      run: npm i
 
     - name: Build
-    - run: npm run build
+      run: npm run build
 
     - name: Restart
-    - run: pm2 restart ecosystem.json
+      run: pm2 restart ecosystem.json
