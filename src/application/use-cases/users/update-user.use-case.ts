@@ -6,7 +6,8 @@ import { IUpdateSuccess, IUser } from '@src/domain/entities';
 @Injectable()
 export class UpdateUserUseCase implements UpdateUserUseCaseAbstract {
   constructor(private dbContext: DatabaseContextAbstract) {}
-  execute(data: IUser): Promise<IUpdateSuccess> {
-    return this.dbContext.user.update(data).then(() => ({ modifiedCount: 1 }));
+  async execute(data: IUser): Promise<IUpdateSuccess> {
+    await this.dbContext.user.update(data);
+    return { modifiedCount: 1 };
   }
 }

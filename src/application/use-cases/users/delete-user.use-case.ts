@@ -6,11 +6,10 @@ import { IDeleteSuccess } from '@src/domain/entities';
 @Injectable()
 export class DeleteUserUseCase implements DeleteUserUseCaseAbstract {
   constructor(private dbContext: DatabaseContextAbstract) {}
-  execute(id: number): Promise<IDeleteSuccess> {
-    return this.dbContext.user
-      .delete({
-        id: id,
-      })
-      .then(() => ({ deletedCount: 1 }));
+  async execute(id: number): Promise<IDeleteSuccess> {
+    await this.dbContext.user.delete({
+      id: id,
+    });
+    return { deletedCount: 1 };
   }
 }
