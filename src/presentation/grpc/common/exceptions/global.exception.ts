@@ -8,18 +8,26 @@ export class GlobalException implements ExceptionFilter {
 
   catch(exception: any, host: ArgumentsHost) {
     const type: string = host.getType();
-    console.error(`🚀 ~ GlobalException ~ exception[${type}]:`, exception);
-    if (type === 'rpc') return this.handleGrpc(exception, host);
+    if (type === 'rpc') return this.handleGrpc(exception);
+    return this.handleGlobal(exception);
   }
 
-  async handleGrpc(exception: RpcException, host: ArgumentsHost) {
-    const ctx = host.switchToRpc();
-    console.log(12344, exception, ctx.getData());
-    throwError(() => ({
-      extensions: {
-        code: exception.message?.toUpperCase()?.trim()?.replaceAll(' ', '_'),
-        devMessage: exception.getError(),
-      },
-    }));
+  async handleGrpc(exception: RpcException) {
+    console.error(`🚀 ~ GrpcException ~ exception:`, exception);
+    return throwError(() => exception.getError());
+  }
+
+  handleGlobal(exception: any): void {
+    console.error('🚀 ~ GlobalException ~ exception:', exception);
+    if (exception?.errorCode) {
+      throw new RpcException({
+        extensions: {
+          code:
+            exception.errorCode || //
+            exception.message?.toUpperCase()?.trim()?.replaceAll(' ', '_'),
+          devMessage: exception?.devMessage,
+        },
+      });
+    }
   }
 }

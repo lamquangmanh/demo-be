@@ -16,9 +16,9 @@ message Users {
 }
 
 service UsersService {
-  rpc Create (User) returns (User) {}
-  rpc Get (base.GetRequest) returns (User) {}
-  rpc List (base.ListRequest) returns (Users) {}
-  rpc Update (User) returns (base.UpdateSuccess) {}
-  rpc Delete (User) returns (base.DeleteSuccess) {}
+  rpc AddUser (User) returns (User) {}
+  rpc GetUser (base.GetRequest) returns (User) {}
+  rpc ListUser (base.ListRequest) returns (Users) {}
+  rpc UpdateUser (User) returns (base.UpdateSuccess) {}
+  rpc DeleteUser (User) returns (base.DeleteSuccess) {}
 }
