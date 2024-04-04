@@ -23,6 +23,7 @@ message GetRequest {
 message ListRequest {
     int32 pageSize = 1;
     int32 page = 2;
-    repeated string ids = 3;
+    string name = 3;
     string sort = 4;
 }
+

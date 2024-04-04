@@ -3,19 +3,18 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { MicroserviceOptions } from '@nestjs/microservices';
 
-import { grpcClientOptions } from './grpc-client.options';
 import { AppModule } from './app.module';
-import { LoggerInterceptor, HttpExceptionFilter } from './common';
+import { LoggerInterceptor } from './application';
+import { ConfigService } from '@nestjs/config';
+import grpcOptions from '@infrastructure/configs/grpc.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors();
+  const config = app.get(ConfigService);
+
   // setup use global interceptor
   app.useGlobalInterceptors(new LoggerInterceptor());
-
-  // setup use global filter
-  app.useGlobalFilters(new HttpExceptionFilter());
 
   // setup default validation pipe
   app.useGlobalPipes(
@@ -28,12 +27,11 @@ async function bootstrap() {
     }),
   );
 
-  app.connectMicroservice<MicroserviceOptions>(grpcClientOptions);
+  app.connectMicroservice<MicroserviceOptions>(grpcOptions(config));
   await app.startAllMicroservices();
 
-  // await app.listen(3000);
-  // await app.listen(3000);
+  await app.listen(config.get('port'));
   console.log(`Application is running`);
-  // console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();

@@ -8,6 +8,7 @@ export class IPagination {
     this.page = data.page;
     this.pageSize = data.pageSize;
     this.sort = data.sort;
+    this.name = data.name;
   }
   @ApiProperty({
     description: 'Paginate: page param. Example: /users?page=10',
@@ -42,6 +43,14 @@ export class IPagination {
   @IsString()
   sort: any = 'updatedAt_desc';
 
+  @ApiProperty({
+    description: 'Example: /users?name=fcmuser.',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  name: string;
+
   getIds() {
     let ids: any;
     if (typeof this.ids === 'string' && this.ids) ids = this.ids.split(',');
@@ -50,11 +59,15 @@ export class IPagination {
   }
 
   getSkip() {
-    return Number(this.page || 0) * this.getTake();
+    return (Number(this.page || 1) - 1) * this.getTake();
   }
 
   getTake() {
     return Number(this.pageSize || 10);
+  }
+
+  getName() {
+    return this.name || undefined;
   }
 
   getSort() {
@@ -78,7 +91,7 @@ export class IPagination {
 
   getOptions(): FindManyOptions {
     return {
-      where: { ids: this.getIds() },
+      where: { ids: this.getIds(), name: this.getName() },
       skip: this.getSkip(),
       take: this.getTake(),
       order: this.getSort(),
