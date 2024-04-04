@@ -1,10 +1,10 @@
 import { Entity, Column, Unique } from 'typeorm';
 
-import { Base } from './base.model';
+import { BaseEntity } from './base.model';
 
 @Entity({ name: 'users' })
 @Unique('unique_username', ['username'])
-export class User extends Base {
+export class UserEntity extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   name: string;
 

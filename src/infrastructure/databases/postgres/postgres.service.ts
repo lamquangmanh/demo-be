@@ -2,7 +2,7 @@ import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { DatabaseContextAbstract } from '@domain/abstracts';
 import { DataSource, EntityManager, QueryRunner, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './models';
+import { UserEntity } from './models';
 import { UserRepository } from './repositories';
 import { IUser } from '@src/domain/entities';
 
@@ -14,7 +14,7 @@ export class PostgresService implements DatabaseContextAbstract, OnApplicationBo
   user: UserRepository;
 
   constructor(
-    @InjectRepository(User)
+    @InjectRepository(UserEntity)
     private userRepository: Repository<IUser>,
     private dataSource: DataSource,
   ) {
