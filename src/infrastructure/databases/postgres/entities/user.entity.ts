@@ -1,6 +1,6 @@
 import { Entity, Column, Unique } from 'typeorm';
 
-import { BaseEntity } from './base.model';
+import { BaseEntity } from './base.entity';
 
 @Entity({ name: 'users' })
 @Unique('unique_username', ['username'])

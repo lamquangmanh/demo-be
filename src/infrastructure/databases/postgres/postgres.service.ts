@@ -2,7 +2,7 @@ import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 import { DatabaseContextAbstract } from '@domain/abstracts';
 import { DataSource, EntityManager, QueryRunner, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserEntity } from './models';
+import { UserEntity } from './entities';
 import { UserRepository } from './repositories';
 import { IUser } from '@src/domain/entities';
 
