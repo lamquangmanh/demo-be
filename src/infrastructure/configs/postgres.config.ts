@@ -9,7 +9,7 @@ import { UserEntity } from '../databases/postgres/entities';
       inject: [ConfigService],
       useFactory: async (config: ConfigService) => ({
         type: 'postgres',
-        host: 'localhost',
+        host: config.get('POSTGRES_HOST'),
         port: Number(config.get('POSTGRES_PORT')),
         username: config.get('POSTGRES_USER'),
         password: config.get('POSTGRES_PASSWORD'),
