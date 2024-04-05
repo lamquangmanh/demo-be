@@ -1,12 +1,11 @@
-import { GrpcOptions, Transport } from '@nestjs/microservices';
+import { Transport } from '@nestjs/microservices';
 import { ReflectionService } from '@grpc/reflection';
-import { ConfigService } from '@nestjs/config';
 import { join } from 'path';
 
-export default (config: ConfigService): GrpcOptions => ({
+export default {
   transport: Transport.GRPC,
   options: {
-    url: `0.0.0.0:${config.get('port')}`,
+    url: `0.0.0.0:${process.env.PORT}`,
     package: ['users'],
     protoPath: ['user.proto'],
     loader: {
@@ -16,4 +15,4 @@ export default (config: ConfigService): GrpcOptions => ({
       new ReflectionService(pkg).addToServer(server);
     },
   },
-});
+};
