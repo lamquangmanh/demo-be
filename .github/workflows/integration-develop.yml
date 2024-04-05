@@ -1,4 +1,4 @@
-name: Continuous Deployment
+name: Continuous Integration
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [ "develop" ]
 
 jobs:
-  build:
-    runs-on: self-hosted
+  test:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout develop branch
@@ -21,10 +21,10 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm i
+        run: npm ci
+
+      - name: Test
+        run: npm run test
 
       - name: Build
         run: npm run build
-
-      - name: Restart
-        run: pm2 restart ecosystem.json
