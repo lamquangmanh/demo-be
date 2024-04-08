@@ -42,7 +42,7 @@ export class PostgresGenericRepository<T>
     return this.repository.save(entity);
   }
 
-  async update(entities?: any) {
+  async save(entities?: any) {
     return this.repository.save({
       ...entities,
       updated_at: new Date(),

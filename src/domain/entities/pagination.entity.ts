@@ -27,6 +27,7 @@ export class IPagination {
     return this.name || undefined;
   }
 
+  // name.ASC
   getSort() {
     let sort: any = { id: 'ASC' };
 

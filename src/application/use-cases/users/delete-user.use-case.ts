@@ -7,9 +7,9 @@ import { IDeleteSuccess } from '@src/domain/entities';
 export class DeleteUserUseCase implements DeleteUserUseCaseAbstract {
   constructor(private dbContext: DatabaseContextAbstract) {}
   async execute(id: number): Promise<IDeleteSuccess> {
-    await this.dbContext.user.delete({
+    const rs = await this.dbContext.user.delete({
       id: id,
     });
-    return { deletedCount: 1 };
+    return { deletedCount: rs.affected };
   }
 }

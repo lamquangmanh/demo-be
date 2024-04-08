@@ -7,7 +7,7 @@ export abstract class GenericRepositoryAbstract<T> {
   abstract find(options: FindManyOptions<T>);
   abstract findOneBy(where: FindOptionsWhere<T> | FindOptionsWhere<T>[]);
   abstract create(data: T);
-  abstract update(entities?: any);
+  abstract save(entities?: any);
   abstract delete(entities?: any);
   abstract increment(filter: any, field: string, value: number);
 }
