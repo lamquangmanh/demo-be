@@ -8,19 +8,14 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
-      - name: Executing remote ssh commands using password
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOST }} #hostname of server
-          username: ${{ secrets.USERNAME }} #username login to server
-          password: ${{ secrets.PASSWORD }} #password login to server
-          port: 22 #port of server - often port is 22
-          script: | # run with multiple script
-            cd /home/ubuntu/fcm-team/core-be
-            git pull
-            docker-compose build
-            docker-compose up -d
+      - name: Checkout develop branch
+        uses: actions/checkout@v3
 
+      - name: Run docker compose build
+        run: docker-compose build
+
+      - name: Run docker compose up
+        run: docker-compose up -d
