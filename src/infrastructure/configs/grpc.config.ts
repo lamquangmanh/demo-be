@@ -1,16 +1,16 @@
 import { GrpcOptions, Transport } from '@nestjs/microservices';
 import { ReflectionService } from '@grpc/reflection';
-import { ConfigService } from '@nestjs/config';
 import { join } from 'path';
 
-export default (config: ConfigService): GrpcOptions => ({
+console.log('path: ', join(__dirname, '../', '/protos'));
+export default (): GrpcOptions => ({
   transport: Transport.GRPC,
   options: {
-    url: `0.0.0.0:${config.get('port')}`,
+    url: `localhost:${process.env.PORT}`,
     package: ['users'],
     protoPath: ['user.proto'],
     loader: {
-      includeDirs: [join(__dirname, '../../..', '/protos')],
+      includeDirs: [join(__dirname, '../', '/protos')],
     },
     onLoadPackageDefinition: (pkg, server) => {
       new ReflectionService(pkg).addToServer(server);
