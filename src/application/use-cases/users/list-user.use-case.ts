@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ListUserUseCaseAbstract } from '@domain/use-cases/users';
 import { DatabaseContextAbstract } from '@src/domain/abstracts';
 import { IPagination, IResponseSuccess, IUser } from '@src/domain/entities';
-import { Like } from 'typeorm';
+import { ILike } from 'typeorm';
 
 @Injectable()
 export class ListUserUseCase implements ListUserUseCaseAbstract {
@@ -13,7 +13,7 @@ export class ListUserUseCase implements ListUserUseCaseAbstract {
     const data: Promise<[IUser[], number]> =
       await this.dbContext.user.pagination({
         ...pagination.getOptions(),
-        where: { ids: pagination.getIds(), name: name && Like(`%${name}%`) },
+        where: { ids: pagination.getIds(), name: name && ILike(`%${name}%`) },
         select: {
           id: true,
           username: true,
