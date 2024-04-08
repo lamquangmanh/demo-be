@@ -13,8 +13,6 @@ import { ConfigModule as ConfigModuleNestJs } from '@nestjs/config';
 class EnvironmentVariables {
   @IsNumber()
   PORT: number;
-  @IsNumber()
-  GRPC_PORT: number;
   // DEBUG
   @IsOptional()
   @IsBoolean()
@@ -61,7 +59,6 @@ const validateEnv = (config: Record<string, unknown>) => {
 
 const configEnv = () => ({
   port: parseInt(process.env.PORT),
-  grpcPort: parseInt(process.env.GRPC_PORT),
 
   env: process.env.ENV,
   isProd: Environment.Production === process.env.ENV,

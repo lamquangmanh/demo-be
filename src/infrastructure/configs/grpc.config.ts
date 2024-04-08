@@ -6,7 +6,7 @@ console.log('path: ', join(__dirname, '../', '/protos'));
 export default (): GrpcOptions => ({
   transport: Transport.GRPC,
   options: {
-    url: `localhost:${process.env.GRPC_PORT}`,
+    url: `localhost:${process.env.PORT}`,
     package: ['users'],
     protoPath: ['user.proto'],
     loader: {
