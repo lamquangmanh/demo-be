@@ -9,5 +9,6 @@ services:
       - '3002:3000'
     env_file:
       - .env
+    restart: always
 networks:
   intranet:

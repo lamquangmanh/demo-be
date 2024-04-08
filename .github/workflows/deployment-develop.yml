@@ -8,23 +8,19 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout develop branch
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Install SSH
+        uses: appleboy/ssh-action@master
         with:
-          node-version: '18.17'
-          cache: 'npm'
+          host: ${{ secrets.HOST }} #hostname of server
+          username: ${{ secrets.USERNAME }} #username login to server
+          password: ${{ secrets.PASSWORD }} #password login to server
+          port: 22 #port of server - often port is 22
+          script: | # run with multiple script
+            cd /home/ubuntu/fcm-team/core-be
+            git pull
+            docker-compose build
+            docker-compose up -d
 
-      - name: Install dependencies
-        run: npm i
-
-      - name: Build
-        run: npm run build
-
-      - name: Restart
-        run: pm2 restart ecosystem.json
