@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install SSH
-        uses: appleboy/ssh-action@master
+      - name: Executing remote ssh commands using password
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }} #hostname of server
           username: ${{ secrets.USERNAME }} #username login to server
