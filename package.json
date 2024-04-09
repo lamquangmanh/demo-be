@@ -8,6 +8,7 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "sonar": "npx sonarqube-scanner",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -38,7 +39,8 @@
     "path": "^0.12.7",
     "pg": "^8.11.3",
     "reflect-metadata": "^0.2.0",
-    "rxjs": "^7.8.1"
+    "rxjs": "^7.8.1",
+    "sonarqube-scanner": "^3.4.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
