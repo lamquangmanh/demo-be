@@ -8,8 +8,8 @@ services:
       #target: runner
     ports:
       - '3002:3000'
-    env_file:
-      - .env
+    # env_file:
+    #  - .env
     restart: always
 networks:
   intranet:
