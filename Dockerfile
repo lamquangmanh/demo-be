@@ -13,7 +13,7 @@ WORKDIR /app
 # Copying this first prevents re-running npm install on every code change.
 COPY package.json package-lock.json* ./
 # Install app dependencies using the `npm ci` command instead of `npm`
-RUN npm ci
+RUN npm i
 
 # Stage 3: build
 # Rebuild the source code only when needed
