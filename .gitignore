@@ -56,3 +56,6 @@ pids
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
 # ignore ecosystem.json of pm2
+
+# ignore sonarqube
+.scannerwork
