@@ -1,4 +1,4 @@
-import { Controller, UseFilters } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 
 import {
@@ -16,10 +16,8 @@ import {
   ListUserUseCaseAbstract,
   UpdateUserUseCaseAbstract,
 } from '@domain/use-cases/users';
-import { GlobalException } from '@presentation/grpc/common/exceptions/global.exception';
 
 @Controller('users')
-@UseFilters(new GlobalException())
 export class UserController {
   constructor(
     private readonly getUserUsecase: GetUserUseCaseAbstract,
