@@ -1,10 +1,13 @@
-import { ExceptionFilter, Catch, ArgumentsHost } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, Inject } from '@nestjs/common';
 import { RpcException } from '@nestjs/microservices';
+import { LoggerAbstract } from '@src/domain/abstracts/logger.abstract';
 import { throwError } from 'rxjs';
 
 @Catch()
 export class GlobalException implements ExceptionFilter {
-  constructor() {}
+  constructor(@Inject(LoggerAbstract) private logger: LoggerAbstract) {
+    logger.init('AppModule', 'LoggerConsoleException');
+  }
 
   catch(exception: any, host: ArgumentsHost) {
     const type: string = host.getType();
@@ -13,7 +16,7 @@ export class GlobalException implements ExceptionFilter {
   }
 
   async handleGrpc(exception: RpcException) {
-    console.error(`🚀 ~ GrpcException ~ exception:`, exception);
+    this.logger.info(`🚀 ~ GrpcException ~ exception: ${exception}`);
     return throwError(() => exception.getError());
   }
 

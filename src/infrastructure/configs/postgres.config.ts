@@ -17,7 +17,7 @@ import { UserEntity } from '../databases/postgres/entities';
         entities: [UserEntity],
         synchronize: true,
         retryAttempts: Infinity,
-        logging: true,
+        logging: false,
       }),
     }),
   ],
