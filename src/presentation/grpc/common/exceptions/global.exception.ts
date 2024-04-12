@@ -15,14 +15,8 @@ export class GlobalException implements ExceptionFilter {
   }
 
   async handleGrpc(error: ErrorResponseAbstract) {
-    console.error(`🚀 ~ GrpcException ~ exception:`, error.message);
-    return throwError(() => ({
-      code: error.errorCode,
-      message: error.message,
-      subCode: '',
-      subMessage: '',
-      data: error.data,
-    }));
+    console.error(`🚀 ~ GrpcException ~ exception:`, error);
+    return throwError(() => error);
   }
 
   handleGlobal(exception: any): void {
