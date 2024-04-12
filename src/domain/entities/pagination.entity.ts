@@ -40,7 +40,7 @@ export class IPagination {
       const arrTem = fields[i].split('.');
       sort[arrTem[0]] = arrTem[1];
     }
-    return { ...sort, ...sortDefault };
+    return sort;
   }
 
   getOptions(): any {
