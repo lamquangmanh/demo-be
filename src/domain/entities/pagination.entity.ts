@@ -5,7 +5,7 @@ export class IPagination {
   page: number = 1;
   pageSize: number = 10;
   ids: any;
-  sort: any = 'updated_at.desc';
+  sort: any;
   name: string = '';
 
   getIds() {
@@ -29,22 +29,20 @@ export class IPagination {
 
   // name.ASC
   getSort() {
-    let sort: any = { id: 'ASC' };
+    const sortDefault: any = { updated_at: 'DESC' };
 
-    if (this.sort) {
-      const fields = this.sort.split(',');
-      if (fields.length > 0) sort = {};
+    if (!this.sort) return sortDefault;
+    const sort = {};
+    const fields = this.sort.split(',');
 
-      for (let i = 0; i < fields.length; i++) {
-        const arrTem = fields[i].split('.');
+    for (let i = 0; i < fields.length; i++) {
+      const arrTem = fields[i].split('.');
 
-        if (arrTem[1] === 'desc' || arrTem[1] === 'asc') {
-          sort[arrTem[0]] = arrTem[1] === 'desc' ? -1 : 1;
-        }
+      if (arrTem[1] === 'desc' || arrTem[1] === 'asc') {
+        sort[arrTem[0]] = arrTem[1] === 'desc' ? -1 : 1;
       }
     }
-
-    return sort;
+    return { ...sort, ...sortDefault };
   }
 
   getOptions(): any {
