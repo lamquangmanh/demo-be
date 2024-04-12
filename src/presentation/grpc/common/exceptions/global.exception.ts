@@ -10,11 +10,15 @@ export class GlobalException implements ExceptionFilter {
   catch(exception: RpcException, host: ArgumentsHost) {
     const type: string = host.getType();
     if (type === 'rpc')
-      return this.handleGrpc(exception.getError() as ErrorResponseAbstract);
+      return this.handleGrpc(
+        exception.getError() as ErrorResponseAbstract,
+        host,
+      );
     return this.handleGlobal(exception);
   }
 
-  async handleGrpc(error: ErrorResponseAbstract) {
+  async handleGrpc(error: ErrorResponseAbstract, host: ArgumentsHost) {
+    error.data = host.switchToRpc().getData();
     console.error(`🚀 ~ GrpcException ~ exception:`, error);
     return throwError(() => error);
   }

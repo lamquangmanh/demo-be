@@ -1,5 +1,5 @@
 export abstract class ErrorResponseAbstract {
-  errorCode: number;
+  code: number;
   data?: any;
   message?: string;
   subCode?: string;

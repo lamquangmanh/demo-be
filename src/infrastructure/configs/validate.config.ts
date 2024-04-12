@@ -15,10 +15,10 @@ import { status } from '@grpc/grpc-js';
           forbidNonWhitelisted: true,
           exceptionFactory: (validationErrors: ValidationError[] = []) => {
             return ErrorResponse({
-              errorCode: status.INVALID_ARGUMENT, //
-              devMessage: config.get('isProd', false)
+              code: status.INVALID_ARGUMENT, //
+              message: config.get('isProd', false)
                 ? undefined
-                : validationErrors,
+                : validationErrors.toString(),
             });
           },
         });
