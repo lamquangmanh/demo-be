@@ -2,6 +2,7 @@ import { Module, ValidationError, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { APP_PIPE } from '@nestjs/core';
 import { ErrorResponse } from '@application/utils';
+import { status } from '@grpc/grpc-js';
 
 @Module({
   providers: [
@@ -14,7 +15,7 @@ import { ErrorResponse } from '@application/utils';
           forbidNonWhitelisted: true,
           exceptionFactory: (validationErrors: ValidationError[] = []) => {
             return ErrorResponse({
-              errorCode: 'BAD_USER_INPUT', //
+              errorCode: status.INVALID_ARGUMENT, //
               devMessage: config.get('isProd', false)
                 ? undefined
                 : validationErrors,

@@ -9,7 +9,7 @@ import { USER_EXCEPTION } from '@src/application/exceptions/user.exception';
 export class GetUserUseCase implements GetUserUseCaseAbstract {
   constructor(private dbContext: DatabaseContextAbstract) {}
   async execute(id: number): Promise<IUser> {
-    if (!id) throw ErrorResponse({ errorCode: USER_EXCEPTION.USER_NOT_FOUND });
+    if (!id) throw ErrorResponse(USER_EXCEPTION.USER_NOT_FOUND);
     const user = await this.dbContext.user.findOne({
       where: { id },
       select: {
@@ -18,8 +18,7 @@ export class GetUserUseCase implements GetUserUseCaseAbstract {
         name: true,
       },
     });
-    if (!user)
-      throw ErrorResponse({ errorCode: USER_EXCEPTION.USER_NOT_FOUND });
+    if (!user) throw ErrorResponse(USER_EXCEPTION.USER_NOT_FOUND);
     return user;
   }
 }

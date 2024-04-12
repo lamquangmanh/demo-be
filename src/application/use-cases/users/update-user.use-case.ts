@@ -9,8 +9,7 @@ import { ErrorResponse } from '@src/application/utils';
 export class UpdateUserUseCase implements UpdateUserUseCaseAbstract {
   constructor(private dbContext: DatabaseContextAbstract) {}
   async execute(data: IUser): Promise<IUpdateSuccess> {
-    if (!data.id)
-      throw ErrorResponse({ errorCode: USER_EXCEPTION.USER_NOT_FOUND });
+    if (!data.id) throw ErrorResponse(USER_EXCEPTION.USER_NOT_FOUND);
     const user = await this.dbContext.user.findOne({
       where: { id: data.id },
       select: {
@@ -19,8 +18,7 @@ export class UpdateUserUseCase implements UpdateUserUseCaseAbstract {
         name: true,
       },
     });
-    if (!user)
-      throw ErrorResponse({ errorCode: USER_EXCEPTION.USER_NOT_FOUND });
+    if (!user) throw ErrorResponse(USER_EXCEPTION.USER_NOT_FOUND);
     const rs = await this.dbContext.user.save(data);
     return { modifiedCount: rs.id && 1 };
   }
