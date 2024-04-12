@@ -19,6 +19,7 @@ export class GlobalException implements ExceptionFilter {
 
   async handleGrpc(error: ErrorResponseAbstract, host: ArgumentsHost) {
     error.data = host.switchToRpc().getData();
+    error.message = JSON.stringify(error);
     console.error(`🚀 ~ GrpcException ~ exception:`, error);
     return throwError(() => error);
   }
