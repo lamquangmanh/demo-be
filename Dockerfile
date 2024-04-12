@@ -9,25 +9,25 @@ RUN apk add --no-cache libc6-compat
 # Set the working directory inside the container  
 WORKDIR /app 
 # Copy application dependency manifests to the container image.
-# A wildcard is used to ensure copying both package.json AND yarn.lock (when available).
+# A wildcard is used to ensure copying both package.json AND package-lock.json(when available).
 # Copying this first prevents re-running npm install on every code change.
 COPY package.json package-lock.json* ./
-# Install app dependencies using the `yarn --frozen-lockfile` command instead of `yarn`
-RUN npm ci
+# Install app dependencies using the `npm ci` command instead of `npm`
+RUN npm i
 
 # Stage 3: build
 # Rebuild the source code only when needed
 FROM base AS builder
 WORKDIR /app
 
-# In order to run `yarn run build` we need access to the Nest CLI which is a dev dependency.
-# In the previous deps stage we ran `yarn --frozen-lockfile` which installed all dependencies,
+# In order to run `npm run build` we need access to the Nest CLI which is a dev dependency.
+# In the previous deps stage we ran `npm ci` which installed all dependencies,
 # so we can copy over the node_modules directory from the deps image
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Add Argument
-ARG API_URL
+# ...
 # Install only the production dependencies and clean cache to optimize image size.
 RUN npm run build
 

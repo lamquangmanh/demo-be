@@ -1,0 +1,3 @@
+export const USER_EXCEPTION = {
+  USER_NOT_FOUND: 'USER_NOT_FOUND',
+};

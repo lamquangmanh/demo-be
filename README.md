@@ -45,6 +45,20 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Running sonarqube local
+
+```bash
+# run sonarqube
+$ docker run -p 9000:9000 sonarqube
+
+# Create project local https://docs.sonarsource.com/sonarqube/latest/project-administration/creating-and-importing-projects/
+
+# update config in sonar-project.properties
+
+# run test with sonarqube
+$ npm run sonar
+```
+
 ## Test
 
 ```bash

@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package users;
+
+import "base.proto";
+
+message User {
+  int32 id = 1;
+  string name = 2;
+  string username = 3;
+}
+
+message Users {
+  repeated User data = 1;
+  int32 total = 2;
+}
+
+service UsersService {
+  rpc AddUser (User) returns (User) {}
+  rpc GetUser (base.GetRequest) returns (User) {}
+  rpc ListUser (base.ListRequest) returns (Users) {}
+  rpc UpdateUser (User) returns (base.UpdateSuccess) {}
+  rpc DeleteUser (User) returns (base.DeleteSuccess) {}
+}

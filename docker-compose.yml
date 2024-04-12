@@ -1,13 +1,15 @@
-version: '3.9'
+version: '3.3'
 
 services:
   fcm-backend:
     image: fcm-backend:latest
     build:
-      target: runner
+      context: .
+      #target: runner
     ports:
       - '3002:3000'
     # env_file:
-    #   - ${ENV_PATH}/backend/.env
+    #  - .env
+    restart: always
 networks:
   intranet:
