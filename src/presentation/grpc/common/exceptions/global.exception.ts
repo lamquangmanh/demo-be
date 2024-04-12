@@ -26,13 +26,13 @@ export class GlobalException implements ExceptionFilter {
 
   handleGlobal(exception: any): void {
     console.error('🚀 ~ GlobalException ~ exception:', exception);
-    if (exception?.errorCode) {
+    if (exception?.code) {
       throw new RpcException({
         extensions: {
           code:
-            exception.errorCode || //
+            exception.code || //
             exception.message?.toUpperCase()?.trim()?.replaceAll(' ', '_'),
-          devMessage: exception?.devMessage,
+          message: exception?.message,
         },
       });
     }
