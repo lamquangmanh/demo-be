@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: core-be-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: core-be
+  template:
+    metadata:
+      labels:
+        app: core-be
+    spec:
+      containers:
+        - name: core-be
+          image: gcr.io/dev-env-424102/core-be:v1.2
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "64Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"

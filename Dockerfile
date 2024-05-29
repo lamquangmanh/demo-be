@@ -25,6 +25,7 @@ WORKDIR /app
 # so we can copy over the node_modules directory from the deps image
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+COPY .env .env
 
 # Add Argument
 # ...
@@ -46,6 +47,7 @@ RUN chown node .
 COPY --chown=node:node --from=builder /app/package*.json ./
 COPY --chown=node:node --from=builder /app/dist dist
 COPY --chown=node:node --from=builder /app/node_modules node_modules
+COPY --chown=node:node --from=builder /app/.env .env
 
 # Use the node user from the image (instead of the root user)
 USER node
