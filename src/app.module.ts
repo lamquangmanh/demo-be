@@ -1,26 +1,24 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
 
-import { UserEntity } from './models';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserModule } from './user';
+// import { AppController } from './app.controller';
+// import { AppService } from './app.service';
+
+// load config
+import { configValidationSchema } from './common/configs/config-validation-schema';
+
+// load repository.module for database
+import { RepositoryModule } from './infrastructure/database/repository.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: Number(process.env.POSTGRES_PORT || 5432),
-      username: process.env.POSTGRES_USER,
-      password: process.env.POSTGRES_PASSWORD,
-      database: process.env.POSTGRES_DB,
-      entities: [UserEntity],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env`,
+      validationSchema: configValidationSchema,
     }),
-    UserModule,
+    RepositoryModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
 export class AppModule {}
