@@ -1,4 +1,4 @@
-import { REQUEST_TYPES } from '@/common/constants';
+import { RequestType } from '@/common/constants';
 import { BaseEntity } from './base.entity';
 
 export interface ActionEntity extends BaseEntity {
@@ -6,7 +6,7 @@ export interface ActionEntity extends BaseEntity {
   resourceId: string;
   name: string;
   description?: string;
-  requestType: REQUEST_TYPES;
+  requestType: RequestType;
   url: string;
   method: string;
 }

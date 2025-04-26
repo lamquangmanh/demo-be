@@ -4,6 +4,38 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
+// import from domain
+import {
+  ACTION_REPOSITORY,
+  MODULE_REPOSITORY,
+  PERMISSION_REPOSITORY,
+  RESOURCE_REPOSITORY,
+  ROLE_REPOSITORY,
+  USER_ROLE_REPOSITORY,
+  USER_REPOSITORY,
+} from '@/common/constants';
+
+// import from infrastructure
+import {
+  ActionRepository,
+  ModuleRepository,
+  PermissionRepository,
+  ResourceRepository,
+  RoleRepository,
+  UserRepository,
+  UserRoleRepository,
+} from './repositories';
+
+import {
+  ActionEntity,
+  ModuleEntity,
+  PermissionEntity,
+  ResourceEntity,
+  RoleEntity,
+  UserEntity,
+  UserRoleEntity,
+} from './entities';
+
 @Module({
   imports: [
     ConfigModule,
@@ -16,13 +48,40 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         username: config.get('DB_USER'),
         password: config.get('DB_PASS'),
         database: config.get('DB_NAME'),
-        entities: [],
+        entities: [join(__dirname, '../entities/*{.ts,.js}')],
         synchronize: false,
         autoLoadEntities: true,
         migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
       }),
       inject: [ConfigService],
     }),
+    TypeOrmModule.forFeature([
+      ActionEntity,
+      ModuleEntity,
+      PermissionEntity,
+      ResourceEntity,
+      RoleEntity,
+      UserEntity,
+      UserRoleEntity,
+    ]),
+  ],
+  providers: [
+    { provide: ACTION_REPOSITORY, useClass: ActionRepository },
+    { provide: MODULE_REPOSITORY, useClass: ModuleRepository },
+    { provide: PERMISSION_REPOSITORY, useClass: PermissionRepository },
+    { provide: RESOURCE_REPOSITORY, useClass: ResourceRepository },
+    { provide: ROLE_REPOSITORY, useClass: RoleRepository },
+    { provide: USER_REPOSITORY, useClass: UserRepository },
+    { provide: USER_ROLE_REPOSITORY, useClass: UserRoleRepository },
+  ],
+  exports: [
+    ACTION_REPOSITORY,
+    MODULE_REPOSITORY,
+    PERMISSION_REPOSITORY,
+    RESOURCE_REPOSITORY,
+    ROLE_REPOSITORY,
+    USER_ROLE_REPOSITORY,
+    USER_REPOSITORY,
   ],
 })
 export class RepositoryModule {

@@ -1,4 +1,9 @@
-import { Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 
 // import from domain
 import { BaseEntity as IBaseEntity } from '@/domain/entities';
@@ -28,7 +33,7 @@ export class BaseEntity implements IBaseEntity {
   })
   updatedUserId: string;
 
-  @Column({
+  @DeleteDateColumn({
     name: 'deleted_at',
     type: 'timestamptz',
     nullable: true,

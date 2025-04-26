@@ -1,12 +1,20 @@
-import { UpdateResult, DeleteResult } from 'typeorm';
+import {
+  UpdateResult,
+  DeleteResult,
+  FindOptionsWhere,
+  FindOptionsOrder,
+} from 'typeorm';
 
 // import from domain
 import { PaginationOption, PaginationResult } from '../types';
 
+// import from common
+import { Filter, Sort } from '@/common';
+
 export interface BaseRepository<T> {
   pagination(
-    filter: Partial<T>,
-    option: PaginationOption<T>,
+    filter: Filter[],
+    option: PaginationOption,
   ): Promise<PaginationResult<T>>;
   findMany(filter: Partial<T>): Promise<T[]>;
   findOne(filter: Partial<T>): Promise<T | null>;
@@ -17,5 +25,15 @@ export interface BaseRepository<T> {
   updateOne(id: string, data: Partial<T>): Promise<UpdateResult>;
 
   deleteById(id: string): Promise<DeleteResult>;
-  softDeleteById(id: string): Promise<UpdateResult>;
+  softDeleteById(id: string, data?: Partial<T>): Promise<UpdateResult>;
+
+  buildFilter(
+    filterInput: Filter[],
+    filterColumns: string[],
+  ): FindOptionsWhere<T>;
+
+  buildSort(
+    sortInput: Sort[] | undefined,
+    sortColumns: string[] | undefined,
+  ): FindOptionsOrder<T>;
 }

@@ -131,7 +131,8 @@ src/
 │   │   │   ├── user.controller.ts
 │   │   │   ├── user.module.ts
 │   │   │   └── dtos/
-│   └── graphql/ (optional)
+│   │── graphql/ (optional)
+│   └── http/ (optional)
 │
 ├── common/                # Common utilities, base classes, etc.
 │   ├── constants/

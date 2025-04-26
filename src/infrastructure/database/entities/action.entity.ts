@@ -15,7 +15,7 @@ import { ActionEntity as IActionEntity } from '@/domain/entities';
 import { BaseEntity } from './base.entity';
 import { ResourceEntity } from './resource.entity';
 import { PermissionEntity } from './permission.entity';
-import { REQUEST_TYPES } from '@/common/constants';
+import { RequestType } from '@/common/constants';
 
 const ENTITY_NAME = 'actions';
 @Entity(ENTITY_NAME)
@@ -59,7 +59,7 @@ export class ActionEntity extends BaseEntity implements IActionEntity {
     length: 20,
     name: 'request_type',
   })
-  requestType: REQUEST_TYPES;
+  requestType: RequestType;
 
   @Column({
     type: 'varchar',

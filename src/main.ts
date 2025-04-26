@@ -1,4 +1,5 @@
 import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
 import { configGrpc } from './common/configs';
@@ -6,8 +7,18 @@ import { configGrpc } from './common/configs';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
+
   // create microservice
-  app.connectMicroservice(configGrpc);
+  app.connectMicroservice(configGrpc, {
+    inheritAppConfig: true,
+  });
 
   await app.startAllMicroservices();
   await app.listen(Number(process.env.PORT ?? 3000));

@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
-// import { AppController } from './app.controller';
-// import { AppService } from './app.service';
-
 // load config
 import { configValidationSchema } from './common/configs/config-validation-schema';
 
-// load repository.module for database
+// import repository module
 import { RepositoryModule } from './infrastructure/database/repository.module';
+import { UserModule } from './presentation/grpc/user/user.module';
+
+// import use-case module
+// import { UseCaseModule } from './use-cases/use-case.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { RepositoryModule } from './infrastructure/database/repository.module';
       validationSchema: configValidationSchema,
     }),
     RepositoryModule,
+    UserModule,
   ],
   providers: [],
 })

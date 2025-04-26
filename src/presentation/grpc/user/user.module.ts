@@ -1,23 +1,24 @@
 import { Module } from '@nestjs/common';
+
 import { UserController } from './user.controller';
-import { CreateUserUseCase } from '../../../use-cases/user/create-user.use-case';
-import { LoginUseCase } from '../../../use-cases/auth/login.use-case';
-import { UserRepository } from '../../../infrastructure/database/repositories/user.repository';
+import {
+  CreateUserUseCase,
+  GetUserUseCase,
+  GetUsersUseCase,
+  UpdateUserUseCase,
+  DeleteUserUseCase,
+} from '@/use-cases/user';
+import { RepositoryModule } from '@/infrastructure/database/repository.module';
 
 @Module({
+  imports: [RepositoryModule],
   controllers: [UserController],
   providers: [
-    {
-      provide: CreateUserUseCase,
-      useFactory: (userRepo: UserRepository) => new CreateUserUseCase(userRepo),
-      inject: [UserRepository],
-    },
-    {
-      provide: LoginUseCase,
-      useFactory: (userRepo: UserRepository) => new LoginUseCase(userRepo),
-      inject: [UserRepository],
-    },
-    UserRepository,
+    CreateUserUseCase,
+    GetUserUseCase,
+    GetUsersUseCase,
+    UpdateUserUseCase,
+    DeleteUserUseCase,
   ],
 })
 export class UserModule {}

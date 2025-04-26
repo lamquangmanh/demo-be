@@ -1,24 +1,63 @@
+// import from libraries
 import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
-import { CreateUserUseCase } from '../../../use-cases/user/create-user.use-case';
-import { LoginUseCase } from '../../../use-cases/auth/login.use-case';
-import { CreateUserInput, LoginInput } from '../../../domain/types/common';
-import { User } from '../../../domain/entities/user.entity';
+
+// import from use-cases
+import {
+  CreateUserUseCase,
+  CreateUserRequestDto,
+  CreateUserSuccessResponse,
+  GetUserUseCase,
+  GetUserSuccessResponse,
+  GetUsersUseCase,
+  UpdateUserUseCase,
+  UpdateUserRequestDto,
+  DeleteUserUseCase,
+  DeleteUserRequestDto,
+} from '@/use-cases/user';
+
+// import from common
+import { validateDto, GetListRequestDto } from '@/common';
+
+// import from domain
+import { UpdateSuccessResponse, DeleteSuccessResponse } from '@/domain/types';
 
 @Controller()
 export class UserController {
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,
-    private readonly loginUseCase: LoginUseCase,
+    private readonly getUserUseCase: GetUserUseCase,
+    private readonly getUsersUseCase: GetUsersUseCase,
+    private readonly updateUserUseCase: UpdateUserUseCase,
+    private readonly deleteUserUseCase: DeleteUserUseCase,
   ) {}
 
-  @GrpcMethod('UserService', 'CreateUser')
-  async createUser(data: CreateUserInput): Promise<User> {
-    return this.createUserUseCase.execute(data);
+  @GrpcMethod('UserService', 'GetUser')
+  async getUser({ userId }): Promise<GetUserSuccessResponse> {
+    return await this.getUserUseCase.execute(userId);
   }
 
-  @GrpcMethod('UserService', 'Login')
-  async login(data: LoginInput): Promise<User | null> {
-    return this.loginUseCase.execute(data);
+  @GrpcMethod('UserService', 'GetUsers')
+  async getUsers(data: any): Promise<GetUserSuccessResponse> {
+    const dto = await validateDto(data, GetListRequestDto);
+    return this.getUsersUseCase.execute(dto);
+  }
+
+  @GrpcMethod('UserService', 'CreateUser')
+  async createUser(data: any): Promise<CreateUserSuccessResponse> {
+    const dto = await validateDto(data, CreateUserRequestDto);
+    return this.createUserUseCase.execute(dto);
+  }
+
+  @GrpcMethod('UserService', 'UpdateUser')
+  async updateUser(data: any): Promise<UpdateSuccessResponse> {
+    const dto = await validateDto(data, UpdateUserRequestDto);
+    return this.updateUserUseCase.execute(dto);
+  }
+
+  @GrpcMethod('UserService', 'DeleteUser')
+  async deleteUser(data: any): Promise<DeleteSuccessResponse> {
+    const dto = await validateDto(data, DeleteUserRequestDto);
+    return this.deleteUserUseCase.execute(dto);
   }
 }
