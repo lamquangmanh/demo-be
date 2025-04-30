@@ -9,13 +9,13 @@ import { GetListRequestDto } from '@/common';
 import { UserRepository } from '@/domain/repositories';
 
 // import from use-case dto
-import { GetUserSuccessResponse } from './types';
+import { GetUsersSuccessResponse } from './types';
 
 export class GetUsersUseCase {
   @Inject(USER_REPOSITORY)
   private readonly userRepo: UserRepository;
 
-  async execute(data: GetListRequestDto): Promise<GetUserSuccessResponse> {
+  async execute(data: GetListRequestDto): Promise<GetUsersSuccessResponse> {
     return this.userRepo.pagination(data.filter, {
       ...data.pagination,
       sortBy: data.sort,

@@ -7,9 +7,9 @@ import { configValidationSchema } from './common/configs/config-validation-schem
 // import repository module
 import { RepositoryModule } from './infrastructure/database/repository.module';
 import { UserModule } from './presentation/grpc/user/user.module';
-
-// import use-case module
-// import { UseCaseModule } from './use-cases/use-case.module';
+import { ModuleModule } from './presentation/grpc/module/module.module';
+import { ResourceModule } from './presentation/grpc/resource/resource.module';
+import { RoleModule } from './presentation/grpc/role/role.module';
 
 @Module({
   imports: [
@@ -20,6 +20,9 @@ import { UserModule } from './presentation/grpc/user/user.module';
     }),
     RepositoryModule,
     UserModule,
+    ModuleModule,
+    ResourceModule,
+    RoleModule,
   ],
   providers: [],
 })

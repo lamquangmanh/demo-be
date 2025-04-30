@@ -1,4 +1,4 @@
-import { UserStatus, SortOrder, FilterOperator } from './enum';
+import { UserStatus, SortOrder, FilterOperator, RequestType } from './enum';
 
 export const ACTION_REPOSITORY = 'ACTION_REPOSITORY';
 export const MODULE_REPOSITORY = 'MODULE_REPOSITORY';
@@ -30,4 +30,12 @@ export const FILTER_OPERATOR_MAPPING = {
   7: FilterOperator.LIKE,
   8: FilterOperator.IN,
   9: FilterOperator.NOT_IN,
+};
+
+export const REQUEST_TYPE_MAPPING = {
+  0: RequestType.VIEW,
+  1: RequestType.HTTP,
+  2: RequestType.GRAPHQL,
+  3: RequestType.GRPC,
+  4: RequestType.WEBSOCKET,
 };

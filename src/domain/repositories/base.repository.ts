@@ -16,8 +16,10 @@ export interface BaseRepository<T> {
     filter: Filter[],
     option: PaginationOption,
   ): Promise<PaginationResult<T>>;
-  findMany(filter: Partial<T>): Promise<T[]>;
-  findOne(filter: Partial<T>): Promise<T | null>;
+  findMany(filter: FindOptionsWhere<T> | FindOptionsWhere<T>[]): Promise<T[]>;
+  findOne(
+    filter: FindOptionsWhere<T> | FindOptionsWhere<T>[],
+  ): Promise<T | null>;
 
   createOne(data: Partial<T>): Promise<T>;
   createMany(data: Partial<T>[]): Promise<T[]>;
@@ -26,6 +28,10 @@ export interface BaseRepository<T> {
 
   deleteById(id: string): Promise<DeleteResult>;
   softDeleteById(id: string, data?: Partial<T>): Promise<UpdateResult>;
+  softDeleteBy(
+    filter: FindOptionsWhere<T>,
+    data: Partial<T>,
+  ): Promise<UpdateResult>;
 
   buildFilter(
     filterInput: Filter[],

@@ -3,6 +3,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
 import { configGrpc } from './common/configs';
+import { LoggerInterceptor } from './common/interceptors';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,7 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  app.useGlobalInterceptors(new LoggerInterceptor());
 
   // create microservice
   app.connectMicroservice(configGrpc, {

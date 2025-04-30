@@ -7,15 +7,13 @@ import { USER_REPOSITORY } from '@/common/constants';
 
 // import from domain
 import { UserRepository } from '@/domain/repositories';
-
-// import from use-case dto
-import { GetUserSuccessResponse } from './types';
+import { UserEntity } from '@/domain/entities';
 
 export class GetUserUseCase {
   @Inject(USER_REPOSITORY)
   private readonly userRepo: UserRepository;
 
-  async execute(userId: string): Promise<GetUserSuccessResponse> {
+  async execute(userId: string): Promise<UserEntity | null> {
     // get user
     const user = await this.userRepo.findOne({ userId });
     return { ...omit(user, ['password']) };

@@ -13,25 +13,25 @@ export class BaseEntity implements IBaseEntity {
     name: 'created_at',
     type: 'timestamptz',
   })
-  createdAt: Date;
+  createdAt?: Date;
 
   @Column({
     type: 'varchar',
     name: 'created_user_id',
   })
-  createdUserId: string;
+  createdUserId?: string;
 
   @UpdateDateColumn({
     name: 'updated_at',
     type: 'timestamptz',
   })
-  updatedAt: Date;
+  updatedAt?: Date;
 
   @Column({
     type: 'varchar',
     name: 'updated_user_id',
   })
-  updatedUserId: string;
+  updatedUserId?: string;
 
   @DeleteDateColumn({
     name: 'deleted_at',

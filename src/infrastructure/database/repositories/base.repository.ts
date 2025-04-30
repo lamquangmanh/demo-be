@@ -29,11 +29,15 @@ export abstract class BaseRepository<T extends ObjectLiteral>
 {
   constructor(protected readonly repository: Repository<T>) {}
 
-  async findMany(filter: Partial<T>): Promise<T[]> {
+  async findMany(
+    filter: FindOptionsWhere<T> | FindOptionsWhere<T>[],
+  ): Promise<T[]> {
     return this.repository.find({ where: filter });
   }
 
-  async findOne(filter: Partial<T>): Promise<T | null> {
+  async findOne(
+    filter: FindOptionsWhere<T> | FindOptionsWhere<T>[],
+  ): Promise<T | null> {
     return this.repository.findOne({ where: filter });
   }
 
@@ -61,6 +65,13 @@ export abstract class BaseRepository<T extends ObjectLiteral>
     }
 
     return this.repository.update(id, data);
+  }
+
+  async softDeleteBy(
+    filter: FindOptionsWhere<T>,
+    data: Partial<T>,
+  ): Promise<UpdateResult> {
+    return this.repository.update(filter, data);
   }
 
   convertDateToISOString(data: any): any {

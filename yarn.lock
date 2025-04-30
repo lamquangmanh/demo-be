@@ -885,15 +885,19 @@
   resolved "https://registry.yarnpkg.com/@js-sdsl/ordered-map/-/ordered-map-4.4.2.tgz#9299f82874bab9e4c7f9c48d865becbfe8d6907c"
   integrity sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==
 
-"@lamquangmanh/protobuf@0.0.15":
-  version "0.0.15"
-  resolved "https://npm.pkg.github.com/download/@lamquangmanh/protobuf/0.0.15/faf39eaea7a817dd6015038f1fc05029ce7b8e6e#faf39eaea7a817dd6015038f1fc05029ce7b8e6e"
-  integrity sha512-HmSbGnJm8niK5txuXy74nR1cxbBNoCX5ylNyelCVGFSL7dGUOZyxujih33HHGOMg0cAcrqCCsXxMXJVG9Ql2+w==
+"@lamquangmanh/protobuf@^0.0.20":
+  version "0.0.20"
+  resolved "https://npm.pkg.github.com/download/@lamquangmanh/protobuf/0.0.20/fa52f6c9bf22a136e4274a435c37c11100b5a5a7#fa52f6c9bf22a136e4274a435c37c11100b5a5a7"
+  integrity sha512-vqBN4Z0LTV5obTohC5zPR9JVJLEaq7Z9r+mqrVSURH1N7CYF/NBuErndH3KjXTkOTWTdF1LIr/9aarLKOYB3tw==
   dependencies:
     "@bufbuild/protobuf" "^2.2.5"
+    "@nestjs/common" "^11.0.1"
+    "@nestjs/core" "^11.0.1"
+    "@nestjs/platform-express" "^11.0.1"
+    reflect-metadata "^0.2.2"
+    rxjs "^7.8.1"
     ts-proto "^2.7.0"
     ts-protoc-gen "^0.15.0"
-    typescript "^5.8.3"
 
 "@lukeed/csprng@^1.0.0":
   version "1.1.0"
@@ -6055,7 +6059,7 @@ typescript@5.7.3:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.7.3.tgz#919b44a7dbb8583a9b856d162be24a54bf80073e"
   integrity sha512-84MVSjMEHP+FQRPy3pX9sTVV/INIex71s9TL2Gm5FG/WG1SqXeKyZ0k7/blY/4FdOzI12CBy1vGc4og/eus0fw==
 
-typescript@^5.7.3, typescript@^5.8.3:
+typescript@^5.7.3:
   version "5.8.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.8.3.tgz#92f8a3e5e3cf497356f4178c34cd65a7f5e8440e"
   integrity sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==

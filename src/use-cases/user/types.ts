@@ -5,7 +5,7 @@ export type CreateUserSuccessResponse = {
   user?: Omit<UserEntity, 'password'>;
 };
 
-export type GetUserSuccessResponse = {
+export type GetUsersSuccessResponse = {
   pagination: PaginationInfo;
   data: Omit<UserEntity, 'password'>[];
 };

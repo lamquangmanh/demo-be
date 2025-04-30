@@ -20,6 +20,14 @@ export enum HttpMethod {
   OPTIONS = 'OPTIONS',
 }
 
+export enum RequestTypeInput {
+  VIEW = 0,
+  HTTP = 1,
+  GRAPHQL = 2,
+  GRPC = 3,
+  WEBSOCKET = 4,
+}
+
 export enum RequestType {
   VIEW = 'VIEW',
   HTTP = 'HTTP',

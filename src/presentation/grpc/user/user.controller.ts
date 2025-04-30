@@ -8,7 +8,7 @@ import {
   CreateUserRequestDto,
   CreateUserSuccessResponse,
   GetUserUseCase,
-  GetUserSuccessResponse,
+  GetUsersSuccessResponse,
   GetUsersUseCase,
   UpdateUserUseCase,
   UpdateUserRequestDto,
@@ -21,6 +21,7 @@ import { validateDto, GetListRequestDto } from '@/common';
 
 // import from domain
 import { UpdateSuccessResponse, DeleteSuccessResponse } from '@/domain/types';
+import { UserEntity } from '@/domain/entities';
 
 @Controller()
 export class UserController {
@@ -33,12 +34,12 @@ export class UserController {
   ) {}
 
   @GrpcMethod('UserService', 'GetUser')
-  async getUser({ userId }): Promise<GetUserSuccessResponse> {
+  async getUser({ userId }): Promise<UserEntity | null> {
     return await this.getUserUseCase.execute(userId);
   }
 
   @GrpcMethod('UserService', 'GetUsers')
-  async getUsers(data: any): Promise<GetUserSuccessResponse> {
+  async getUsers(data: any): Promise<GetUsersSuccessResponse> {
     const dto = await validateDto(data, GetListRequestDto);
     return this.getUsersUseCase.execute(dto);
   }
