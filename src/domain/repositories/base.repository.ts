@@ -3,6 +3,7 @@ import {
   DeleteResult,
   FindOptionsWhere,
   FindOptionsOrder,
+  FindOneOptions,
 } from 'typeorm';
 
 // import from domain
@@ -19,6 +20,7 @@ export interface BaseRepository<T> {
   findMany(filter: FindOptionsWhere<T> | FindOptionsWhere<T>[]): Promise<T[]>;
   findOne(
     filter: FindOptionsWhere<T> | FindOptionsWhere<T>[],
+    options?: FindOneOptions<T>,
   ): Promise<T | null>;
 
   createOne(data: Partial<T>): Promise<T>;

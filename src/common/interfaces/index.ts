@@ -15,3 +15,15 @@ export interface Sort {
   field: string;
   order: SortOrder;
 }
+
+export interface JwtPayload {
+  // payload of jwt
+  exp?: number;
+  iat?: number;
+  iss?: string;
+  sub?: string;
+  aud?: string;
+
+  userId: string;
+  email: string;
+}

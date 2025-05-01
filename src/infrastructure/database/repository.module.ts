@@ -52,6 +52,7 @@ import {
         synchronize: false,
         autoLoadEntities: true,
         migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
+        migrationsRun: true,
       }),
       inject: [ConfigService],
     }),

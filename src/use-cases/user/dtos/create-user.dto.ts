@@ -9,6 +9,7 @@ import {
   IsPhoneNumber,
   ValidateNested,
   IsEnum,
+  IsArray,
 } from 'class-validator';
 import { Type, Transform } from 'class-transformer';
 
@@ -54,6 +55,10 @@ export class CreateUserDto {
     return USER_STATUS_MAPPING[Number(value)] ?? undefined;
   })
   status: UserStatus;
+
+  @IsArray()
+  @IsString({ each: true })
+  roleIds: string[];
 }
 
 export class CreateUserRequestDto {

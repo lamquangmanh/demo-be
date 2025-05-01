@@ -14,6 +14,7 @@ import {
   ILike,
   FindOptionsOrder,
   FindOptionsWhere,
+  FindOneOptions,
 } from 'typeorm';
 import { toString } from 'lodash';
 
@@ -37,8 +38,9 @@ export abstract class BaseRepository<T extends ObjectLiteral>
 
   async findOne(
     filter: FindOptionsWhere<T> | FindOptionsWhere<T>[],
+    options?: FindOneOptions<T>,
   ): Promise<T | null> {
-    return this.repository.findOne({ where: filter });
+    return this.repository.findOne({ where: filter, ...(options ?? {}) });
   }
 
   async createOne(data: Partial<T>): Promise<T> {

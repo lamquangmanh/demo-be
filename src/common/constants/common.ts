@@ -39,3 +39,5 @@ export const REQUEST_TYPE_MAPPING = {
   3: RequestType.GRPC,
   4: RequestType.WEBSOCKET,
 };
+
+export const REDIS_CLIENT = 'REDIS_CLIENT';

@@ -52,6 +52,7 @@ export class UserController {
 
   @GrpcMethod('UserService', 'UpdateUser')
   async updateUser(data: any): Promise<UpdateSuccessResponse> {
+    console.log('data', data);
     const dto = await validateDto(data, UpdateUserRequestDto);
     return this.updateUserUseCase.execute(dto);
   }
