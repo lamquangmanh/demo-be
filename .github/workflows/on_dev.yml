@@ -1,0 +1,31 @@
+name: Workflow Dev
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'dev'
+
+jobs:
+  call_ci_process:
+    name: Run CI Process
+    uses: lamquangmanh/github-workflows/.github/workflows/minikube-ci.yml@main
+    with:
+      environment: dev
+    secrets: inherit
+
+  call_cd_process:
+    name: Run Artifact Registry Process
+    uses: lamquangmanh/github-workflows/.github/workflows/minikube-cd.yml@main
+    with:
+      environment: dev
+    secrets: inherit
+
+  call_k8s_process:
+    name: Run K8s Process
+    needs: call_cd_process
+    uses: lamquangmanh/github-workflows/.github/workflows/minikube-k8s.yml@main
+    with:
+      environment: dev
+      path: 'k3s-apps/overlays/backend/'
+    secrets: inherit
