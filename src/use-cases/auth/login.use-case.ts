@@ -50,10 +50,6 @@ export class LoginUseCase {
     }
 
     const isVerified = await bcrypt.compareSync(data.password, user.password);
-    console.log('isVerified', isVerified, {
-      a: data.password,
-      b: user.password,
-    });
     if (!isVerified) {
       throw new GrpcCustomException({
         code: status.INVALID_ARGUMENT,
