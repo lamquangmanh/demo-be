@@ -8,7 +8,6 @@ WORKDIR /app
 COPY package*.json yarn.lock .npmrc ./
 
 # Step 4: Install dependencies
-RUN npm install -g yarn
 RUN yarn install --frozen-lockfile
 
 # Step 5: Copy the entire application to the container
