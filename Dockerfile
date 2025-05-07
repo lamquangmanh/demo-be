@@ -5,16 +5,17 @@ FROM node:22-bullseye AS builder
 WORKDIR /app
 
 # Step 3: Copy package.json and package-lock.json (or yarn.lock)
-COPY package*.json ./
+COPY package*.json yarn.lock .npmrc ./
 
 # Step 4: Install dependencies
-RUN npm install
+RUN npm install -g yarn
+RUN yarn install --frozen-lockfile
 
 # Step 5: Copy the entire application to the container
 COPY . .
 
 # Step 6: Build the Next.js application
-RUN npm run build
+RUN yarn run build
 
 # Step 7: Create a production stage to serve the app
 FROM node:22-bullseye AS production
