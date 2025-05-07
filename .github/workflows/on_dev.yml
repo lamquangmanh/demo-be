@@ -28,5 +28,5 @@ jobs:
     uses: lamquangmanh/github-workflows/.github/workflows/k3s-k8s.yml@main
     with:
       environment: dev
-      path: 'k3s-apps/overlays/backend/'
+      repo_path: 'k3s-apps/overlays/backend/'
     secrets: inherit
