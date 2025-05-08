@@ -2,7 +2,7 @@
 import { Inject } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { status } from '@grpc/grpc-js';
-import { In, Not, DataSource } from 'typeorm';
+import { In, Not } from 'typeorm';
 
 // import from common
 import {

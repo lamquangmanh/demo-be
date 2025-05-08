@@ -9,24 +9,24 @@ on:
 jobs:
   call_ci_process:
     name: Run CI Process
-    uses: lamquangmanh/github-workflows/.github/workflows/k3s-ci2.yml@main
+    uses: lamquangmanh/github-workflows/.github/workflows/k3s-ci.yml@main
     with:
       environment: dev
     secrets: inherit
 
-  # call_cd_process:
-  #   name: Run Artifact Registry Process
-  #   uses: lamquangmanh/github-workflows/.github/workflows/k3s-cd.yml@main
-  #   with:
-  #     environment: dev
-  #     docker_repository: 'lamquangmanh/demo-be'
-  #   secrets: inherit
+  call_cd_process:
+    name: Run Artifact Registry Process
+    uses: lamquangmanh/github-workflows/.github/workflows/k3s-cd.yml@main
+    with:
+      environment: dev
+      docker_repository: 'lamquangmanh/demo-be'
+    secrets: inherit
 
-  # call_k8s_process:
-  #   name: Run K8s Process
-  #   needs: call_cd_process
-  #   uses: lamquangmanh/github-workflows/.github/workflows/k3s-k8s.yml@main
-  #   with:
-  #     environment: dev
-  #     repo_path: 'k3s-apps/overlays/backend/'
-  #   secrets: inherit
+  call_k8s_process:
+    name: Run K8s Process
+    needs: call_cd_process
+    uses: lamquangmanh/github-workflows/.github/workflows/k3s-k8s.yml@main
+    with:
+      environment: dev
+      repo_path: 'k3s-apps/overlays/backend/'
+    secrets: inherit

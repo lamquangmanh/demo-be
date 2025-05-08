@@ -181,7 +181,7 @@ export abstract class BaseRepository<T extends ObjectLiteral>
           break;
         case FilterOperator.LIKE:
           // disable warning for line with type "any"
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+
           condition[item.field] = ILike(`%${toString(value)}%`);
           break;
         case FilterOperator.IN:
