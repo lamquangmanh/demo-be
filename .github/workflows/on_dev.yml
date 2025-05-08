@@ -9,7 +9,7 @@ on:
 jobs:
   call_ci_process:
     name: Run CI Process
-    uses: lamquangmanh/github-workflows/.github/workflows/k3s-ci.yml@main
+    uses: lamquangmanh/github-workflows/.github/workflows/k3s-ci2.yml@main
     with:
       environment: dev
     secrets: inherit
