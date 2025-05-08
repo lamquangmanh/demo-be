@@ -19,7 +19,7 @@ jobs:
     uses: lamquangmanh/github-workflows/.github/workflows/k3s-cd.yml@main
     with:
       environment: dev
-      docker_repository: 'lamquangmanh/demo-be'
+      docker_repository: 'quangmanhlam/demo-be'
     secrets: inherit
 
   call_k8s_process:
