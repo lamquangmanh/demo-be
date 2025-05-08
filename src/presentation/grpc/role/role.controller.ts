@@ -7,7 +7,7 @@ import {
   GetRolesRequest,
   UpdateRoleRequest,
   DeleteRoleRequest,
-} from '@lamquangmanh/protobuf/dist/build/Role/v1/Role';
+} from '@lamquangmanh/protobuf/dist/Role/v1/Role';
 
 // import from use-cases
 import {
