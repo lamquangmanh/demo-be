@@ -29,4 +29,5 @@ jobs:
     with:
       environment: dev
       repo_path: 'k3s-apps/overlays/backend/'
+      docker_repository: 'quangmanhlam/demo-be'
     secrets: inherit
