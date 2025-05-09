@@ -30,4 +30,4 @@ EXPOSE 3000
 EXPOSE 5000
 
 # Step 11: Start the Next.js application in production mode
-CMD ["npm", "start:prod"]
+CMD ["npm", "start"]
