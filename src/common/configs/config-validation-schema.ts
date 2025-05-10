@@ -57,7 +57,7 @@ const getConfiguration = () => {
     // Redis configuration
     REDIS_HOST: process.env.REDIS_HOST,
     REDIS_PORT: Number(process.env.REDIS_PORT),
-    REDIS_PASS: process.env.REDIS_PASSWORD,
+    REDIS_PASS: process.env.REDIS_PASS,
     REDIS_DB: Number(process.env.REDIS_DB ?? 0),
     REDIS_KEY_PREFIX: 'user_be_service:',
   };
