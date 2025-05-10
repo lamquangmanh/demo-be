@@ -41,19 +41,36 @@ import {
     ConfigModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (config: ConfigService) => ({
-        type: 'postgres',
-        host: config.get('DB_HOST'),
-        port: config.get<number>('DB_PORT'),
-        username: config.get('DB_USER'),
-        password: config.get('DB_PASS') ?? undefined,
-        database: config.get('DB_NAME'),
-        entities: [join(__dirname, '../entities/*{.ts,.js}')],
-        synchronize: false,
-        autoLoadEntities: true,
-        migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
-        migrationsRun: true,
-      }),
+      // useFactory: (config: ConfigService) => ({
+      //   type: 'postgres',
+      //   host: config.get('DB_HOST'),
+      //   port: config.get<number>('DB_PORT'),
+      //   username: config.get('DB_USER'),
+      //   password: config.get('DB_PASS') ?? undefined,
+      //   database: config.get('DB_NAME'),
+      //   entities: [join(__dirname, '../entities/*{.ts,.js}')],
+      //   synchronize: false,
+      //   autoLoadEntities: true,
+      //   migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
+      //   migrationsRun: true,
+      // }),
+      useFactory: (config: ConfigService): any => {
+        const configDB = {
+          type: 'postgres',
+          host: config.get('DB_HOST'),
+          port: config.get<number>('DB_PORT'),
+          username: config.get('DB_USER'),
+          password: config.get('DB_PASS') ?? undefined,
+          database: config.get('DB_NAME'),
+          entities: [join(__dirname, '../entities/*{.ts,.js}')],
+          synchronize: false,
+          autoLoadEntities: true,
+          migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
+          migrationsRun: true,
+        };
+        console.log('Database configuration: ', configDB);
+        return configDB;
+      },
       inject: [ConfigService],
     }),
     TypeOrmModule.forFeature([
