@@ -68,3 +68,4 @@ const getConfiguration = () => {
 };
 
 export const CONFIGURATION = getConfiguration();
+console.log('Configuration: ', CONFIGURATION);
