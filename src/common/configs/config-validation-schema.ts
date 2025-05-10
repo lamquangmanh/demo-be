@@ -17,7 +17,7 @@ export const configValidationSchema = Joi.object({
   DB_HOST: Joi.string().required(),
   DB_PORT: Joi.number().required(),
   DB_USER: Joi.string().required(),
-  // DB_PASS: Joi.string().required(),
+  DB_PASS: Joi.string().optional(),
   DB_NAME: Joi.string().required(),
 
   // JWT configuration
@@ -27,10 +27,8 @@ export const configValidationSchema = Joi.object({
   // Redis configuration
   REDIS_HOST: Joi.string().required(),
   REDIS_PORT: Joi.number().required(),
-  // REDIS_PASSWORD: Joi.string().optional(),
-  // REDIS_DB: Joi.number().default(0),
-  // REDIS_URL: Joi.string().optional(),
-  // REDIS_USERNAME: Joi.string().optional(),
+  REDIS_PASS: Joi.string().optional(),
+  REDIS_DB: Joi.number().default(0),
 });
 
 const getConfiguration = () => {
@@ -59,10 +57,8 @@ const getConfiguration = () => {
     // Redis configuration
     REDIS_HOST: process.env.REDIS_HOST,
     REDIS_PORT: Number(process.env.REDIS_PORT),
-    REDIS_PASSWORD: process.env.REDIS_PASSWORD,
+    REDIS_PASS: process.env.REDIS_PASSWORD,
     REDIS_DB: Number(process.env.REDIS_DB ?? 0),
-    REDIS_URL: process.env.REDIS_URL,
-    REDIS_USERNAME: process.env.REDIS_USERNAME,
     REDIS_KEY_PREFIX: 'user_be_service:',
   };
 };

@@ -10,8 +10,7 @@ export const REDIS_PROVIDER = {
       host: CONFIGURATION.REDIS_HOST,
       port: CONFIGURATION.REDIS_PORT,
       db: CONFIGURATION.REDIS_DB ?? undefined,
-      password: CONFIGURATION.REDIS_PASSWORD ?? undefined,
-      username: CONFIGURATION.REDIS_USERNAME ?? undefined,
+      password: CONFIGURATION.REDIS_PASS ?? undefined,
       keyPrefix: CONFIGURATION.REDIS_KEY_PREFIX ?? undefined,
     });
   },

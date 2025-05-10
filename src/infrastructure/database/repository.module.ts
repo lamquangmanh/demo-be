@@ -46,7 +46,7 @@ import {
         host: config.get('DB_HOST'),
         port: config.get<number>('DB_PORT'),
         username: config.get('DB_USER'),
-        password: config.get('DB_PASS'),
+        password: config.get('DB_PASS') ?? undefined,
         database: config.get('DB_NAME'),
         entities: [join(__dirname, '../entities/*{.ts,.js}')],
         synchronize: false,
