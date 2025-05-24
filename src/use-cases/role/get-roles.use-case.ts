@@ -16,9 +16,9 @@ export class GetRolesUseCase {
   private readonly roleRepo: RoleRepository;
 
   async execute(data: GetListRequestDto): Promise<GetRolesSuccessResponse> {
-    return this.roleRepo.pagination(data.filter, {
+    return this.roleRepo.pagination(data.filters, {
       ...data.pagination,
-      sortBy: data.sort,
+      sortBy: data.sorts,
       sortColumns: ['createdAt', 'updatedAt', 'name', 'moduleId'],
       filterColumns: ['name', 'moduleId'],
       isConvertDate: true,

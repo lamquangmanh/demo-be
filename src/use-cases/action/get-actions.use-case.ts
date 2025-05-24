@@ -16,9 +16,9 @@ export class GetActionsUseCase {
   private readonly actionRepo: ActionRepository;
 
   async execute(data: GetListRequestDto): Promise<GetActionsSuccessResponse> {
-    return this.actionRepo.pagination(data.filter, {
+    return this.actionRepo.pagination(data.filters, {
       ...data.pagination,
-      sortBy: data.sort,
+      sortBy: data.sorts,
       sortColumns: [
         'createdAt',
         'updatedAt',

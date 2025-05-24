@@ -16,9 +16,9 @@ export class GetModulesUseCase {
   private readonly moduleRepo: ModuleRepository;
 
   async execute(data: GetListRequestDto): Promise<GetModulesSuccessResponse> {
-    return this.moduleRepo.pagination(data.filter, {
+    return this.moduleRepo.pagination(data.filters, {
       ...data.pagination,
-      sortBy: data.sort,
+      sortBy: data.sorts,
       sortColumns: ['createdAt', 'updatedAt', 'name'],
       filterColumns: ['name'],
       isConvertDate: true,

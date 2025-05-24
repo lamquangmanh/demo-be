@@ -18,9 +18,9 @@ export class GetPermissionsUseCase {
   async execute(
     data: GetListRequestDto,
   ): Promise<GetPermissionsSuccessResponse> {
-    return this.roleRepo.pagination(data.filter, {
+    return this.roleRepo.pagination(data.filters, {
       ...data.pagination,
-      sortBy: data.sort,
+      sortBy: data.sorts,
       sortColumns: [
         'createdAt',
         'updatedAt',

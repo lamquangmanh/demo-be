@@ -16,9 +16,9 @@ export class GetResourcesUseCase {
   private readonly moduleRepo: ResourceRepository;
 
   async execute(data: GetListRequestDto): Promise<GetResourcesSuccessResponse> {
-    return this.moduleRepo.pagination(data.filter, {
+    return this.moduleRepo.pagination(data.filters, {
       ...data.pagination,
-      sortBy: data.sort,
+      sortBy: data.sorts,
       sortColumns: ['createdAt', 'updatedAt', 'name', 'moduleId'],
       filterColumns: ['name', 'moduleId'],
       isConvertDate: true,

@@ -16,9 +16,9 @@ export class GetUsersUseCase {
   private readonly userRepo: UserRepository;
 
   async execute(data: GetListRequestDto): Promise<GetUsersSuccessResponse> {
-    return this.userRepo.pagination(data.filter, {
+    return this.userRepo.pagination(data.filters, {
       ...data.pagination,
-      sortBy: data.sort,
+      sortBy: data.sorts,
       sortColumns: [
         'createdAt',
         'updatedAt',
