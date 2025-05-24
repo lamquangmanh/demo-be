@@ -136,15 +136,20 @@ export abstract class BaseRepository<T extends ObjectLiteral>
   }
 
   getValueOfFilter(value: any) {
-    // handle other value type
-    return (
-      value.stringValue ||
-      value.numberValue ||
-      value.booleanValue ||
-      value.numberValues ||
-      value.stringValues ||
-      value.booleanValues
-    );
+    // check if value is an object with stringValue, numberValue, booleanValue
+    const singleValue =
+      value.stringValue || value.numberValue || value.booleanValue;
+    if (singleValue) return singleValue;
+
+    // check if value is an object with numberValues, stringValues, booleanValues
+    if (value.numberValues && value.numberValues.length > 0)
+      return value.numberValues;
+    if (value.stringValues && value.stringValues.length > 0)
+      return value.stringValues;
+    if (value.booleanValues && value.booleanValues.length > 0)
+      return value.booleanValues;
+    // if no value is found, return the first null value
+    return null;
   }
 
   buildFilter(
