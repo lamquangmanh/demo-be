@@ -13,6 +13,7 @@ export class GetResourceUseCase {
   private readonly resourceRepo: ResourceRepository;
 
   async execute(resourceId: string): Promise<ResourceEntity | null> {
-    return this.resourceRepo.findOne({ resourceId });
+    const result = await this.resourceRepo.findOne({ resourceId });
+    return this.resourceRepo.convertDateToISOString(result);
   }
 }

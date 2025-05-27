@@ -13,6 +13,7 @@ export class GetRoleUseCase {
   private readonly roleRepo: RoleRepository;
 
   async execute(roleId: string): Promise<RoleEntity | null> {
-    return this.roleRepo.findOne({ roleId });
+    const result = await this.roleRepo.findOne({ roleId });
+    return this.roleRepo.convertDateToISOString(result);
   }
 }

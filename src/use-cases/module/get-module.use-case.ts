@@ -13,6 +13,7 @@ export class GetModuleUseCase {
   private readonly moduleRepo: ModuleRepository;
 
   async execute(moduleId: string): Promise<ModuleEntity | null> {
-    return this.moduleRepo.findOne({ moduleId });
+    const result = await this.moduleRepo.findOne({ moduleId });
+    return this.moduleRepo.convertDateToISOString(result);
   }
 }

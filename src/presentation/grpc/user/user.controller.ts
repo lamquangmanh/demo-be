@@ -14,6 +14,8 @@ import {
   UpdateUserRequestDto,
   DeleteUserUseCase,
   DeleteUserRequestDto,
+  ChangePasswordUserRequestDto,
+  ChangePasswordUseCase,
 } from '@/use-cases/user';
 
 // import from common
@@ -31,6 +33,7 @@ export class UserController {
     private readonly getUsersUseCase: GetUsersUseCase,
     private readonly updateUserUseCase: UpdateUserUseCase,
     private readonly deleteUserUseCase: DeleteUserUseCase,
+    private readonly changePasswordUseCase: ChangePasswordUseCase,
   ) {}
 
   @GrpcMethod('UserService', 'GetUser')
@@ -52,7 +55,6 @@ export class UserController {
 
   @GrpcMethod('UserService', 'UpdateUser')
   async updateUser(data: any): Promise<UpdateSuccessResponse> {
-    console.log('data', data);
     const dto = await validateDto(data, UpdateUserRequestDto);
     return this.updateUserUseCase.execute(dto);
   }
@@ -61,5 +63,11 @@ export class UserController {
   async deleteUser(data: any): Promise<DeleteSuccessResponse> {
     const dto = await validateDto(data, DeleteUserRequestDto);
     return this.deleteUserUseCase.execute(dto);
+  }
+
+  @GrpcMethod('UserService', 'ChangePassword')
+  async changePassword(data: any): Promise<DeleteSuccessResponse> {
+    const dto = await validateDto(data, ChangePasswordUserRequestDto);
+    return this.changePasswordUseCase.execute(dto);
   }
 }

@@ -29,6 +29,20 @@ export class GetUsersUseCase {
       ],
       filterColumns: ['username', 'email', 'status'],
       isConvertDate: true,
+      select: [
+        'userId',
+        'username',
+        'email',
+        'phone',
+        'avatar',
+        'status',
+        'createdAt',
+        'createdUserId',
+        'updatedAt',
+        'updatedUserId',
+        'deletedAt',
+        'deletedUserId',
+      ],
     });
   }
 }

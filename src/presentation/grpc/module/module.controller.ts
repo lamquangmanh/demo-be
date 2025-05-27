@@ -39,7 +39,7 @@ export class ModuleController {
   }: {
     moduleId: string;
   }): Promise<ModuleEntity | null> {
-    return await this.getModuleUseCase.execute(moduleId);
+    return this.getModuleUseCase.execute(moduleId);
   }
 
   @GrpcMethod('ModuleService', 'GetModules')

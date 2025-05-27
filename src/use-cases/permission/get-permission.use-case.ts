@@ -13,6 +13,7 @@ export class GetPermissionUseCase {
   private readonly repo: PermissionRepository;
 
   async execute(permissionId: string): Promise<PermissionEntity | null> {
-    return this.repo.findOne({ permissionId });
+    const result = await this.repo.findOne({ permissionId });
+    return this.repo.convertDateToISOString(result);
   }
 }

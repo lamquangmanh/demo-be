@@ -44,4 +44,5 @@ export interface BaseRepository<T> {
     sortInput: Sort[] | undefined,
     sortColumns: string[] | undefined,
   ): FindOptionsOrder<T>;
+  convertDateToISOString(data: any): any;
 }

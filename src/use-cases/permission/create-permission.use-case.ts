@@ -91,6 +91,8 @@ export class CreateRoleUseCase {
       updatedUserId: input.userId,
     };
     const permission = await this.permissionRepo.createOne(data);
-    return { permission };
+    return {
+      permission: this.permissionRepo.convertDateToISOString(permission),
+    };
   }
 }

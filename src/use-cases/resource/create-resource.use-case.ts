@@ -89,7 +89,7 @@ export class CreateResourceUseCase {
         await actionRepository.save(actionData);
       }
 
-      return { resource };
+      return { resource: this.resourceRepo.convertDateToISOString(resource) };
     });
   }
 }

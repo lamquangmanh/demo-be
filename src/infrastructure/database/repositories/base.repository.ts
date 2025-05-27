@@ -77,6 +77,17 @@ export abstract class BaseRepository<T extends ObjectLiteral>
   }
 
   convertDateToISOString(data: any): any {
+    // return if data is null or undefined
+    if (!data) return data;
+
+    // if data is not an array
+    if (!Array.isArray(data)) {
+      data.createdAt = data.createdAt?.toISOString();
+      data.updatedAt = data.updatedAt?.toISOString();
+      data.deletedAt = data.deletedAt?.toISOString();
+      return data;
+    }
+
     const newData: any = [];
     for (const item of data) {
       item.createdAt = item.createdAt?.toISOString();
@@ -116,6 +127,7 @@ export abstract class BaseRepository<T extends ObjectLiteral>
       skip,
       take,
       order: sort ?? undefined,
+      select: option?.select ?? undefined,
     });
 
     let newResult = result;

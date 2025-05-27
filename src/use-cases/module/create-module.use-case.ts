@@ -44,6 +44,6 @@ export class CreateModuleUseCase {
       updatedUserId: input.userId,
     };
     const module = await this.moduleRepo.createOne(data);
-    return { module };
+    return { module: this.moduleRepo.convertDateToISOString(module) };
   }
 }

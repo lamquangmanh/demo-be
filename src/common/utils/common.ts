@@ -53,7 +53,10 @@ export const formatErrors = (errors: any[]): ErrorItem[] => {
 export const validateDto = async (data: any, dto: any): Promise<any> => {
   try {
     const dtoInstance = plainToInstance(dto, data);
-    await validateOrReject(dtoInstance);
+    await validateOrReject(dtoInstance, {
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    });
     return dtoInstance;
   } catch (errors) {
     const errorList = formatErrors(errors as ValidationError[]);

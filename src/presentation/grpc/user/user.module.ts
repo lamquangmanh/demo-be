@@ -7,6 +7,7 @@ import {
   GetUsersUseCase,
   UpdateUserUseCase,
   DeleteUserUseCase,
+  ChangePasswordUseCase,
 } from '@/use-cases/user';
 import { RepositoryModule } from '@/infrastructure/database/repository.module';
 
@@ -19,6 +20,7 @@ import { RepositoryModule } from '@/infrastructure/database/repository.module';
     GetUsersUseCase,
     UpdateUserUseCase,
     DeleteUserUseCase,
+    ChangePasswordUseCase,
   ],
 })
 export class UserModule {}

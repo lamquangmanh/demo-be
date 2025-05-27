@@ -1,6 +1,5 @@
 // import from libraries
 import { Inject } from '@nestjs/common';
-import { omit } from 'lodash';
 
 // import from common
 import { USER_REPOSITORY } from '@/common/constants';
@@ -15,7 +14,25 @@ export class GetUserUseCase {
 
   async execute(userId: string): Promise<UserEntity | null> {
     // get user
-    const user = await this.userRepo.findOne({ userId });
-    return { ...omit(user, ['password']) };
+    const user = await this.userRepo.findOne(
+      { userId },
+      {
+        select: [
+          'userId',
+          'username',
+          'email',
+          'phone',
+          'avatar',
+          'status',
+          'createdAt',
+          'createdUserId',
+          'updatedAt',
+          'updatedUserId',
+          'deletedAt',
+          'deletedUserId',
+        ],
+      },
+    );
+    return this.userRepo.convertDateToISOString(user);
   }
 }

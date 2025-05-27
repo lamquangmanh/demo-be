@@ -70,6 +70,7 @@ export class CreateUserUseCase {
     }));
     await this.userRoleRepo.createMany(userRoleData);
 
-    return { user: omit(user, ['password']) };
+    const result = omit(user, ['password']);
+    return { user: this.userRepo.convertDateToISOString(result) };
   }
 }

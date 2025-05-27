@@ -48,6 +48,6 @@ export class CreateActionUseCase {
       updatedUserId: data.userId,
     };
     const action = await this.actionRepo.createOne(actionData);
-    return { action };
+    return { action: this.actionRepo.convertDateToISOString(action) };
   }
 }

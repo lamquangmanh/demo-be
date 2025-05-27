@@ -130,6 +130,6 @@ export class CreateRoleUseCase {
     }));
     await this.permissionRepo.createMany(permissionsData);
 
-    return { role };
+    return { role: this.roleRepo.convertDateToISOString(role) };
   }
 }

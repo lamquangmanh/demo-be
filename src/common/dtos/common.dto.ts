@@ -90,10 +90,10 @@ export class GetListRequestDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => SortDto)
-  sorts: SortDto[];
+  sorts: SortDto[] = [];
 
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => FilterDto)
-  filters: FilterDto[];
+  filters: FilterDto[] = [];
 }

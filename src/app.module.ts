@@ -13,6 +13,7 @@ import { UserModule } from './presentation/grpc/user/user.module';
 import { ModuleModule } from './presentation/grpc/module/module.module';
 import { ResourceModule } from './presentation/grpc/resource/resource.module';
 import { RoleModule } from './presentation/grpc/role/role.module';
+import { ActionModule } from './presentation/grpc/action/action.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { RoleModule } from './presentation/grpc/role/role.module';
     ModuleModule,
     ResourceModule,
     RoleModule,
+    ActionModule,
   ],
   providers: [],
 })
