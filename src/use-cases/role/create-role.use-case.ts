@@ -2,6 +2,7 @@
 import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
 import { In } from 'typeorm';
+import { uniq } from 'lodash';
 
 // import from common
 import {
@@ -72,9 +73,11 @@ export class CreateRoleUseCase {
     }
 
     // check actions not found
-    const actionIds = input.role.permissions.map(
+    let actionIds = input.role.permissions.map(
       (permission) => permission.actionId,
     );
+    // remove duplicates
+    actionIds = uniq(actionIds);
     const actions = await this.actionRepo.findMany({
       actionId: In(actionIds),
     });
@@ -89,9 +92,10 @@ export class CreateRoleUseCase {
     }
 
     // check resource not found
-    const resourceIds = input.role.permissions.map(
+    let resourceIds = input.role.permissions.map(
       (permission) => permission.resourceId,
     );
+    resourceIds = uniq(resourceIds);
     const resources = await this.resourceRepo.findMany({
       resourceId: In(resourceIds),
     });

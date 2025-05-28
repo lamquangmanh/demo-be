@@ -19,8 +19,8 @@ export class GetModulesUseCase {
     return this.moduleRepo.pagination(data.filters, {
       ...data.pagination,
       sortBy: data.sorts,
-      sortColumns: ['createdAt', 'updatedAt', 'name'],
-      filterColumns: ['name'],
+      sortColumns: ['createdAt', 'updatedAt', 'name', 'moduleId'],
+      filterColumns: ['name', 'moduleId'],
       isConvertDate: true,
     });
   }

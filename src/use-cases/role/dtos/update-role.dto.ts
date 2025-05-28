@@ -1,10 +1,16 @@
-import { IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  ValidateNested,
+  IsOptional,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { OmitType } from '@nestjs/mapped-types';
 
 import { CreateRoleDto, CreateRolePermissionDto } from './create-role.dto';
 
 export class UpdateRolePermissionDto extends CreateRolePermissionDto {
+  @IsOptional()
   @IsNotEmpty()
   @IsString()
   permissionId?: string;
