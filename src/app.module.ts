@@ -14,6 +14,7 @@ import { ModuleModule } from './presentation/grpc/module/module.module';
 import { ResourceModule } from './presentation/grpc/resource/resource.module';
 import { RoleModule } from './presentation/grpc/role/role.module';
 import { ActionModule } from './presentation/grpc/action/action.module';
+import { AuthModule as AuthModuleGrpc } from './presentation/grpc/auth/auth.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ActionModule } from './presentation/grpc/action/action.module';
     ResourceModule,
     RoleModule,
     ActionModule,
+    AuthModuleGrpc,
   ],
   providers: [],
 })
