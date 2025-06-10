@@ -5,16 +5,19 @@ import { JwtModule } from '@nestjs/jwt';
 // load config
 import { configValidationSchema } from './common/configs/config-validation-schema';
 
-// import repository module
+// import common module
 import { RedisModule } from './infrastructure/redis/redis.module';
 import { RepositoryModule } from './infrastructure/database/repository.module';
-import { AuthModule } from './presentation/http/auth/auth.module';
+
+// import feature modules
+import { AuthModule as AuthModuleHttp } from './presentation/http/auth/auth.module';
 import { UserModule } from './presentation/grpc/user/user.module';
 import { ModuleModule } from './presentation/grpc/module/module.module';
 import { ResourceModule } from './presentation/grpc/resource/resource.module';
 import { RoleModule } from './presentation/grpc/role/role.module';
 import { ActionModule } from './presentation/grpc/action/action.module';
-import { AuthModule as AuthModuleGrpc } from './presentation/grpc/auth/auth.module';
+import { AuthModule } from './presentation/grpc/auth/auth.module';
+import { MenuModule } from './presentation/grpc/menu/menu.module';
 
 @Module({
   imports: [
@@ -30,13 +33,14 @@ import { AuthModule as AuthModuleGrpc } from './presentation/grpc/auth/auth.modu
     }),
     RedisModule,
     RepositoryModule,
-    AuthModule,
+    AuthModuleHttp,
     UserModule,
     ModuleModule,
     ResourceModule,
     RoleModule,
     ActionModule,
-    AuthModuleGrpc,
+    AuthModule,
+    MenuModule,
   ],
   providers: [],
 })

@@ -4,6 +4,7 @@ import { RoleEntity } from './role.entity';
 export interface ModuleEntity extends BaseEntity {
   moduleId: string;
   name: string;
+  url?: string;
   description?: string;
   roles?: RoleEntity[];
 }

@@ -14,6 +14,10 @@ export class CreateModuleDto {
   @IsOptional()
   @IsString()
   description: string;
+
+  @IsOptional()
+  @IsString()
+  url: string;
 }
 
 export class CreateModuleRequestDto {

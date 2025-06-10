@@ -15,6 +15,7 @@ import {
   FindOptionsOrder,
   FindOptionsWhere,
   FindOneOptions,
+  FindManyOptions,
 } from 'typeorm';
 import { toString } from 'lodash';
 
@@ -29,6 +30,10 @@ export abstract class BaseRepository<T extends ObjectLiteral>
   implements IBaseRepository<T>
 {
   constructor(protected readonly repository: Repository<T>) {}
+
+  async find(options: FindManyOptions<T> | undefined): Promise<T[]> {
+    return this.repository.find(options);
+  }
 
   async findMany(
     filter: FindOptionsWhere<T> | FindOptionsWhere<T>[],

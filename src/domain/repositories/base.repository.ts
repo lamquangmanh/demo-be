@@ -4,6 +4,7 @@ import {
   FindOptionsWhere,
   FindOptionsOrder,
   FindOneOptions,
+  FindManyOptions,
 } from 'typeorm';
 
 // import from domain
@@ -17,6 +18,7 @@ export interface BaseRepository<T> {
     filter: Filter[],
     option: PaginationOption,
   ): Promise<PaginationResult<T>>;
+  find(options: FindManyOptions<T> | undefined): Promise<T[]>;
   findMany(filter: FindOptionsWhere<T> | FindOptionsWhere<T>[]): Promise<T[]>;
   findOne(
     filter: FindOptionsWhere<T> | FindOptionsWhere<T>[],

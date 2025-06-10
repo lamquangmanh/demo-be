@@ -44,6 +44,14 @@ export class ModuleEntity extends BaseEntity implements IModuleEntity {
   })
   description: string;
 
+  @Column({
+    type: 'varchar',
+    length: 255,
+    name: 'url',
+    nullable: true,
+  })
+  url: string;
+
   @OneToMany(() => ResourceEntity, (resource) => resource.module)
   resources?: ResourceEntity[];
 
