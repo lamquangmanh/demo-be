@@ -213,8 +213,9 @@ export class GetSuperMenusUseCase {
     // build data for response
     const data = this.buildResponseData(user);
 
-    // set the actions to redis: expires in 1 day
-    await this.redis.set(redisKey, JSON.stringify(data), 'EX', 60 * 60 * 24);
+    // set the actions to redis: expires in 1 day. set temporaty is 1 minute
+    // await this.redis.set(redisKey, JSON.stringify(data), 'EX', 60 * 60 * 24);
+    await this.redis.set(redisKey, JSON.stringify(data), 'EX', 60);
     return data;
   }
 }
