@@ -19,9 +19,9 @@ import {
   GetSuperMenusResponse,
   GetSuperMenusRequest,
   GetUserRoleResult,
+  Product,
   Resource,
   Module,
-  Action,
 } from './types';
 
 export class GetSuperMenusUseCase {
@@ -41,26 +41,28 @@ export class GetSuperMenusUseCase {
         'role.permissions.resource',
         'role.permissions.action',
         'role.permissions.resource.module',
+        'role.permissions.resource.module.product',
       ],
     });
   }
 
   addSuperMenu(
     data: GetSuperMenusResponse,
-    module: Module,
+    product: Product,
   ): GetSuperMenusResponse {
     // check if module already exists in response data
     const existingModule = data.superMenus.find(
-      (menu) => menu.moduleId === module.moduleId,
+      (menu) => menu.productId === product.productId,
     );
     if (existingModule) return data;
 
     // if module does not exist, create a new one
     data.superMenus.push({
-      moduleId: module.moduleId,
-      name: module.name,
-      description: module.description,
-      url: module.url,
+      productId: product.productId,
+      name: product.name,
+      description: product.description,
+      url: product.url ?? '',
+      icon: product.icon,
       menus: [],
     });
 
@@ -69,13 +71,12 @@ export class GetSuperMenusUseCase {
 
   addMenu(
     data: GetSuperMenusResponse,
-    resource: Resource,
-    moduleId: string,
-    actionUrl: string,
+    module: Module,
+    productId: string,
   ): GetSuperMenusResponse {
     // find the super menu by moduleId
     const superMenu = data.superMenus.find(
-      (menu) => menu.moduleId === moduleId,
+      (menu) => menu.productId === productId,
     );
     if (!superMenu) {
       return data; // if super menu does not exist, return data
@@ -87,7 +88,7 @@ export class GetSuperMenusUseCase {
     }
     // check if the resource already exists in the menus
     const existingResource = superMenu.menus.find(
-      (menu) => menu.resourceId === resource.resourceId,
+      (menu) => menu.moduleId === module.moduleId,
     );
     if (existingResource) {
       // if resource already exists, return data
@@ -96,9 +97,10 @@ export class GetSuperMenusUseCase {
 
     // if resource does not exist, create a new one
     superMenu.menus.push({
-      resourceId: resource.resourceId,
-      name: resource.name,
-      url: actionUrl,
+      moduleId: module.moduleId,
+      name: module.name,
+      url: module.url ?? '',
+      icon: module.icon ?? '',
       subMenus: [],
     });
     return data;
@@ -106,44 +108,43 @@ export class GetSuperMenusUseCase {
 
   addSubMenu(
     data: GetSuperMenusResponse,
-    action: Action,
-    resourceId: string,
+    resource: Resource,
     moduleId: string,
+    productId: string,
   ): GetSuperMenusResponse {
     // find the super menu by moduleId
     const superMenu = data.superMenus.find(
-      (menu) => menu.moduleId === moduleId,
+      (menu) => menu.productId === productId,
     );
     if (!superMenu) {
       return data; // if super menu does not exist, return data
     }
     // find the resource in the menus
-    const resource = superMenu.menus.find(
-      (menu) => menu.resourceId === resourceId,
+    const menu = superMenu.menus.find(
+      (menuItem) => menuItem.moduleId === moduleId,
     );
-    if (!resource) {
+    if (!menu) {
       return data; // if resource does not exist, return data
     }
+
     // check if subMenus array exists, if not, create it
-    if (!resource.subMenus) {
-      resource.subMenus = [];
+    if (!menu.subMenus) {
+      menu.subMenus = [];
     }
     // check if the action already exists in the subMenus
-    const existingAction = resource.subMenus.find(
-      (subMenu) => subMenu.actionId === action.actionId,
+    const existingResource = menu.subMenus.find(
+      (subMenu) => subMenu.resourceId === resource.resourceId,
     );
-    if (existingAction) {
+    if (existingResource) {
       // if action already exists, return data
       return data;
     }
 
     // if action does not exist, create a new one
-    resource.subMenus.push({
-      actionId: action.actionId,
-      name: action.name,
-      url: action.url,
-      requestType: action.requestType,
-      method: action.method,
+    menu.subMenus.push({
+      resourceId: resource.resourceId,
+      name: resource.name,
+      url: resource.url ?? '',
     });
     return data;
   }
@@ -155,6 +156,7 @@ export class GetSuperMenusUseCase {
 
     for (const userRole of userRoles) {
       for (const permission of userRole.role.permissions) {
+        const product = permission.resource.module.product;
         const module = permission.resource.module;
         const action = permission.action;
         const resource = permission.resource;
@@ -163,24 +165,20 @@ export class GetSuperMenusUseCase {
         if ((action.requestType as RequestType) !== RequestType.VIEW) {
           continue;
         }
+        resource.url = action.url;
 
         // add super menu if it does not exist
-        responseData = this.addSuperMenu(responseData, module);
+        responseData = this.addSuperMenu(responseData, product);
 
         // add menu if it does not exist
-        responseData = this.addMenu(
-          responseData,
-          resource,
-          module.moduleId,
-          action.url,
-        );
+        responseData = this.addMenu(responseData, module, product.productId);
 
         // add subMenu if it does not exist
         responseData = this.addSubMenu(
           responseData,
-          action,
-          resource.resourceId,
+          resource,
           module.moduleId,
+          product.productId,
         );
       }
     }

@@ -13,12 +13,12 @@ import { GetPermissionsSuccessResponse } from './types';
 
 export class GetPermissionsUseCase {
   @Inject(PERMISSION_REPOSITORY)
-  private readonly roleRepo: PermissionRepository;
+  private readonly permissionRepo: PermissionRepository;
 
   async execute(
     data: GetListRequestDto,
   ): Promise<GetPermissionsSuccessResponse> {
-    return this.roleRepo.pagination(data.filters, {
+    return this.permissionRepo.pagination(data.filters, {
       ...data.pagination,
       sortBy: data.sorts,
       sortColumns: [

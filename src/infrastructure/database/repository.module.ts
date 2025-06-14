@@ -13,6 +13,7 @@ import {
   ROLE_REPOSITORY,
   USER_ROLE_REPOSITORY,
   USER_REPOSITORY,
+  PRODUCT_REPOSITORY,
 } from '@/common/constants';
 
 // import from infrastructure
@@ -24,6 +25,7 @@ import {
   RoleRepository,
   UserRepository,
   UserRoleRepository,
+  ProductRepository,
 } from './repositories';
 
 import {
@@ -34,6 +36,7 @@ import {
   RoleEntity,
   UserEntity,
   UserRoleEntity,
+  ProductEntity,
 } from './entities';
 
 @Module({
@@ -41,19 +44,6 @@ import {
     ConfigModule,
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      // useFactory: (config: ConfigService) => ({
-      //   type: 'postgres',
-      //   host: config.get('DB_HOST'),
-      //   port: config.get<number>('DB_PORT'),
-      //   username: config.get('DB_USER'),
-      //   password: config.get('DB_PASS') ?? undefined,
-      //   database: config.get('DB_NAME'),
-      //   entities: [join(__dirname, '../entities/*{.ts,.js}')],
-      //   synchronize: false,
-      //   autoLoadEntities: true,
-      //   migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
-      //   migrationsRun: true,
-      // }),
       useFactory: (config: ConfigService): any => {
         const configDB = {
           type: 'postgres',
@@ -81,6 +71,7 @@ import {
       RoleEntity,
       UserEntity,
       UserRoleEntity,
+      ProductEntity,
     ]),
   ],
   providers: [
@@ -91,6 +82,7 @@ import {
     { provide: ROLE_REPOSITORY, useClass: RoleRepository },
     { provide: USER_REPOSITORY, useClass: UserRepository },
     { provide: USER_ROLE_REPOSITORY, useClass: UserRoleRepository },
+    { provide: PRODUCT_REPOSITORY, useClass: ProductRepository },
   ],
   exports: [
     ACTION_REPOSITORY,
@@ -100,6 +92,7 @@ import {
     ROLE_REPOSITORY,
     USER_ROLE_REPOSITORY,
     USER_REPOSITORY,
+    PRODUCT_REPOSITORY,
   ],
 })
 export class RepositoryModule {

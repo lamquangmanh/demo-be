@@ -1,23 +1,23 @@
 export interface SubMenu {
-  actionId: string;
-  name: string;
-  url: string;
-  method: string;
-  requestType: string;
-}
-
-export interface Menu {
   resourceId: string;
   name: string;
   url: string;
+}
+
+export interface Menu {
+  moduleId: string;
+  name: string;
+  url: string;
+  icon?: string;
   subMenus: SubMenu[];
 }
 
 export interface SuperMenu {
-  moduleId: string;
+  productId: string;
   name: string;
   description: string;
   url: string;
+  icon?: string;
   menus: Menu[];
 }
 
@@ -50,17 +50,29 @@ export interface Module {
   name: string;
   description: string;
   url: string;
+  icon?: string;
+  product: Product;
 }
 
 export interface Resource {
   resourceId: string;
   name: string;
+  url?: string;
+  icon?: string;
   module: Module;
 }
 
+export interface Product {
+  productId: string;
+  name: string;
+  description: string;
+  url?: string;
+  icon?: string;
+}
+
 export interface Permission {
-  resource: Resource;
   action: Action;
+  resource: Resource;
 }
 
 export interface GetUserRoleResult {

@@ -4,6 +4,8 @@ import {
   PrimaryGeneratedColumn,
   Index,
   OneToMany,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 
 // import from domain
@@ -13,6 +15,7 @@ import { ModuleEntity as IModuleEntity } from '@/domain/entities';
 import { BaseEntity } from './base.entity';
 import { ResourceEntity } from './resource.entity';
 import { RoleEntity } from './role.entity';
+import { ProductEntity } from './product.entity';
 
 const ENTITY_NAME = 'modules';
 @Entity(ENTITY_NAME)
@@ -22,6 +25,7 @@ const ENTITY_NAME = 'modules';
 @Index(`IDX_${ENTITY_NAME}_created_at`, ['createdAt'])
 @Index(`IDX_${ENTITY_NAME}_updated_at`, ['updatedAt'])
 @Index(`IDX_${ENTITY_NAME}_deleted_at`, ['deletedAt'])
+@Index(`IDX_${ENTITY_NAME}_product_id`, ['productId'])
 export class ModuleEntity extends BaseEntity implements IModuleEntity {
   @PrimaryGeneratedColumn('uuid', {
     name: 'module_id',
@@ -51,6 +55,27 @@ export class ModuleEntity extends BaseEntity implements IModuleEntity {
     nullable: true,
   })
   url: string;
+
+  @Column({
+    type: 'varchar',
+    name: 'icon',
+    nullable: true,
+  })
+  icon: string;
+
+  @Column({
+    type: 'uuid',
+    name: 'product_id',
+    nullable: true,
+  })
+  productId: string;
+
+  @ManyToOne(() => ProductEntity, (product) => product.modules)
+  @JoinColumn({
+    name: 'product_id',
+    foreignKeyConstraintName: 'FK_module_product_id',
+  })
+  product?: ProductEntity;
 
   @OneToMany(() => ResourceEntity, (resource) => resource.module)
   resources?: ResourceEntity[];

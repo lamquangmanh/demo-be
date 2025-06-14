@@ -3,38 +3,33 @@ import {
   IsOptional,
   IsString,
   ValidateNested,
-  IsUUID,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
-export class CreateModuleDto {
+export class CreateProductDto {
   @IsString()
   @IsNotEmpty()
   name: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   description: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   url: string;
 
   @IsOptional()
   @IsString()
   icon: string;
-
-  @IsUUID()
-  productId: string;
 }
 
-export class CreateModuleRequestDto {
+export class CreateProductRequestDto {
   @IsString()
-  @IsNotEmpty()
-  @IsUUID()
+  @IsNotEmpty({ message: 'User is is required' })
   userId: string;
 
   @ValidateNested()
-  @Type(() => CreateModuleDto)
-  module: CreateModuleDto;
+  @Type(() => CreateProductDto)
+  product: CreateProductDto;
 }

@@ -18,6 +18,8 @@ import { RoleModule } from './presentation/grpc/role/role.module';
 import { ActionModule } from './presentation/grpc/action/action.module';
 import { AuthModule } from './presentation/grpc/auth/auth.module';
 import { MenuModule } from './presentation/grpc/menu/menu.module';
+import { ProductModule } from './presentation/grpc/product/product.module';
+import { PermissionModule } from './presentation/grpc/permission/permission.module';
 
 @Module({
   imports: [
@@ -41,6 +43,8 @@ import { MenuModule } from './presentation/grpc/menu/menu.module';
     ActionModule,
     AuthModule,
     MenuModule,
+    ProductModule,
+    PermissionModule,
   ],
   providers: [],
 })
