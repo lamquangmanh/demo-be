@@ -26,7 +26,7 @@ WORKDIR /app
 COPY --from=builder /app ./
 
 # Step 10: Expose the port the app will run on
-EXPOSE 3000
+EXPOSE 5001
 EXPOSE 5000
 
 # Step 11: Start the Next.js application in production mode
