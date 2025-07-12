@@ -52,10 +52,10 @@ import {
           username: config.get('DB_USER'),
           password: config.get('DB_PASS') ?? undefined,
           database: config.get('DB_NAME'),
-          entities: [join(__dirname, '../entities/*{.ts,.js}')],
+          entities: [join(__dirname, './entities/*{.ts,.js}')],
           synchronize: false,
           autoLoadEntities: true,
-          migrations: [join(__dirname, '../migrations/*{.ts,.js}')],
+          migrations: [join(__dirname, './migrations/*{.ts,.js}')],
           migrationsRun: true,
         };
         console.log('Database configuration: ', configDB);
