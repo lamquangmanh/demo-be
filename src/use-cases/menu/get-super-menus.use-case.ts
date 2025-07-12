@@ -206,13 +206,11 @@ export class GetSuperMenusUseCase {
     // get data from redis
     const redisKey = USER_SUPER_MENU_KEY.replace('{userId}', request.userId);
     const redisActionData = await this.redis.get(redisKey);
-    console.log(`Redis key: ${redisKey}, Data: ${redisActionData}`);
     if (redisActionData) return JSON.parse(redisActionData);
 
     // get user information
     const user = await this.getUser(request.userId);
 
-    console.log(`User roles: ${JSON.stringify(user)} `);
     // build data for response
     const data = this.buildResponseData(user);
 
