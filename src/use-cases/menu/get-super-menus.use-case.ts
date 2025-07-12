@@ -153,13 +153,18 @@ export class GetSuperMenusUseCase {
     let responseData: GetSuperMenusResponse = {
       superMenus: [],
     };
-
+    let count = 0;
     for (const userRole of userRoles) {
       for (const permission of userRole.role.permissions) {
         const product = permission.resource.module.product;
         const module = permission.resource.module;
         const action = permission.action;
         const resource = permission.resource;
+        count++;
+
+        if (!product || !module || !action || !resource) {
+          console.log(product, module, action, resource, count);
+        }
 
         // only get actions with requestType VIEW
         if ((action.requestType as RequestType) !== RequestType.VIEW) {
@@ -209,7 +214,7 @@ export class GetSuperMenusUseCase {
     // get user information
     const user = await this.getUser(request.userId);
 
-    console.log(`User roles: ${JSON.stringify(user)}`);
+    console.log(`User roles: ${JSON.stringify(user)} `);
     // build data for response
     const data = this.buildResponseData(user);
 
