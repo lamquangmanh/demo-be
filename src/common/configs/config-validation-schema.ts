@@ -64,4 +64,4 @@ const getConfiguration = () => {
 };
 
 export const CONFIGURATION = getConfiguration();
-console.log('Configuration: ', CONFIGURATION);
+console.log('Configuration updated: ', CONFIGURATION);
