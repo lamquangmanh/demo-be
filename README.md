@@ -156,3 +156,144 @@ Use case calls UserRepository (from domain/repositories)
 Repository implementation in infrastructure/database/repositories/
 
 Response returned back up through controller.
+
+# Integrate Tempo with NestJS
+
+Integrating **Grafana Tempo** with a **NestJS** application involves using **OpenTelemetry SDK for Node.js**, then exporting traces to Tempo via the **OTLP protocol**. You can also optionally use an **OpenTelemetry Collector** as an intermediate layer, but it's not required if Tempo accepts OTLP directly (which it usually does).
+
+---
+
+## ✅ Goal
+
+- Automatically trace HTTP requests, services, and DB calls inside your **NestJS** app.
+- Export traces to **Tempo** via OTLP (HTTP or gRPC).
+- Visualize traces in **Grafana** (linked to Tempo).
+
+---
+
+## 🧰 Tools Needed
+
+| Tool                                         | Purpose                           |
+| -------------------------------------------- | --------------------------------- |
+| `@opentelemetry/sdk-node`                    | Node.js OpenTelemetry SDK         |
+| `@opentelemetry/instrumentation-http`        | HTTP request tracing              |
+| `@opentelemetry/instrumentation-nestjs-core` | NestJS-specific tracing           |
+| `@opentelemetry/exporter-trace-otlp-http`    | Export traces to Tempo            |
+| Grafana Tempo                                | Trace backend (already installed) |
+
+---
+
+## 🧱 Step-by-Step: Setup OpenTelemetry in NestJS
+
+---
+
+### 📦 1. Install Dependencies
+
+```bash
+npm install \
+  @opentelemetry/sdk-node \
+  @opentelemetry/auto-instrumentations-node \
+  @opentelemetry/instrumentation-nestjs-core \
+  @opentelemetry/instrumentation-http \
+  @opentelemetry/instrumentation-express \
+  @opentelemetry/instrumentation-pg \
+  @opentelemetry/exporter-trace-otlp-http \
+  @opentelemetry/resources \
+  @opentelemetry/semantic-conventions
+```
+
+---
+
+### 🧠 2. Create `tracing.ts`
+
+This sets up the OpenTelemetry SDK and sends data to Tempo.
+
+```ts
+// tracing.ts
+import { NodeSDK } from '@opentelemetry/sdk-node';
+import { Resource } from '@opentelemetry/resources';
+import { SemanticResourceAttributes } from '@opentelemetry/semantic-conventions';
+import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node';
+import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
+
+const sdk = new NodeSDK({
+  resource: new Resource({
+    [SemanticResourceAttributes.SERVICE_NAME]: 'nestjs-app',
+  }),
+  traceExporter: new OTLPTraceExporter({
+    url: 'http://tempo.monitoring.svc.cluster.local:4318/v1/traces',
+  }),
+  instrumentations: [getNodeAutoInstrumentations()],
+});
+
+sdk
+  .start()
+  .then(() => console.log('✅ Tracing initialized'))
+  .catch((err) => console.error('❌ Error initializing tracing', err));
+```
+
+---
+
+### ⚙️ 3. Load Tracing Before NestJS Starts
+
+In your `main.ts`, **import `tracing.ts` before anything else**:
+
+```ts
+// main.ts
+import '../tracing'; // 👈 Make sure this is first
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  await app.listen(3000);
+}
+bootstrap();
+```
+
+---
+
+### 🌐 4. Confirm Tempo Receives Traces
+
+- Make some requests to your NestJS app.
+- Go to **Grafana → Explore → Tempo**.
+- Use `service.name = nestjs-app` as a filter.
+- You should see traces and spans with full path/timing breakdown.
+
+---
+
+### 🧪 5. Optional: Add Manual Spans (Advanced)
+
+You can manually instrument critical parts:
+
+```ts
+import { trace } from '@opentelemetry/api';
+
+const tracer = trace.getTracer('custom');
+
+async function criticalFunction() {
+  const span = tracer.startSpan('important-work');
+  try {
+    // your logic
+  } finally {
+    span.end();
+  }
+}
+```
+
+---
+
+## 📌 Tip: Using NestJS Interceptor (Optional)
+
+You can add custom span logging via NestJS interceptors for deeper logic instrumentation (e.g., service-level trace IDs).
+
+---
+
+## ✅ Summary
+
+| What you did           | Tool                                         |
+| ---------------------- | -------------------------------------------- |
+| Tracing SDK setup      | `@opentelemetry/sdk-node`                    |
+| NestJS instrumentation | `@opentelemetry/instrumentation-nestjs-core` |
+| Trace export to Tempo  | `@opentelemetry/exporter-trace-otlp-http`    |
+| Visualization          | Grafana + Tempo                              |

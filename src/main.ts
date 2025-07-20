@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { Logger } from 'nestjs-pino';
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 
@@ -7,7 +8,11 @@ import { configGrpc } from './common/configs';
 import { LoggerInterceptor } from './common/interceptors';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    // makes sure logs during bootstrap are buffered
+    bufferLogs: true,
+  });
+  app.useLogger(app.get(Logger)); // use Pino as the logger
 
   app.useGlobalPipes(
     new ValidationPipe({
