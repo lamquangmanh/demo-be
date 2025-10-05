@@ -11,6 +11,7 @@ import { RepositoryModule } from './infrastructure/database/repository.module';
 
 // import feature modules
 import { AuthModule as AuthModuleHttp } from './presentation/http/auth/auth.module';
+import { HealthModule } from './presentation/http/health/health.module';
 import { UserModule } from './presentation/grpc/user/user.module';
 import { ModuleModule } from './presentation/grpc/module/module.module';
 import { ResourceModule } from './presentation/grpc/resource/resource.module';
@@ -45,6 +46,7 @@ import { PermissionModule } from './presentation/grpc/permission/permission.modu
     MenuModule,
     ProductModule,
     PermissionModule,
+    HealthModule,
   ],
   providers: [],
 })

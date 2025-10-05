@@ -904,13 +904,28 @@
     ts-proto "^2.7.0"
     ts-protoc-gen "^0.15.0"
 
-"@lamquangmanh/protobuf@^0.0.32":
-  version "0.0.32"
-  resolved "https://npm.pkg.github.com/download/@lamquangmanh/protobuf/0.0.32/9cc856a833c425e8faf7ae7dd703b251f020b008#9cc856a833c425e8faf7ae7dd703b251f020b008"
-  integrity sha512-QeXc2yJWcWBZLU4Re3/2CU4ynwOA/Ca4C+pD5HpDkf/k1au7eNLuRGjAE1HzzEeUESeWUpuEm91ftBBwpg6miQ==
+"@lamquangmanh/protobuf@^0.0.34":
+  version "0.0.34"
+  resolved "https://npm.pkg.github.com/download/@lamquangmanh/protobuf/0.0.34/4407346277d506f5bf85becbf9da87b663483501#4407346277d506f5bf85becbf9da87b663483501"
+  integrity sha512-CtE9eEw6xDyD8X0+wZTQlC0WbPCTMo/f3BMz3v7zvm5AN7MCiU5ugfBHi5OXufrcb7WJ2zw0Xe8MNMDllDZ1Jg==
   dependencies:
     "@bufbuild/protobuf" "^2.2.5"
     "@lamquangmanh/protobuf" "^0.0.21"
+    "@nestjs/common" "^11.0.1"
+    "@nestjs/core" "^11.0.1"
+    "@nestjs/platform-express" "^11.0.1"
+    reflect-metadata "^0.2.2"
+    rxjs "^7.8.1"
+    ts-proto "^2.7.0"
+    ts-protoc-gen "^0.15.0"
+
+"@lamquangmanh/protobuf@^0.0.36":
+  version "0.0.36"
+  resolved "https://npm.pkg.github.com/download/@lamquangmanh/protobuf/0.0.36/3ac93dd9b271452f2cd9a4d2e6ad5f59b17ccaef#3ac93dd9b271452f2cd9a4d2e6ad5f59b17ccaef"
+  integrity sha512-tsVlYlv/9QmmdyRGXgMS9kMzGWYd2m/cyM+oykDJ16SdPuwOPhQUDdhszppgvOVID3l1NCjfkw+dlbBeYVFqHw==
+  dependencies:
+    "@bufbuild/protobuf" "^2.2.5"
+    "@lamquangmanh/protobuf" "^0.0.34"
     "@nestjs/common" "^11.0.1"
     "@nestjs/core" "^11.0.1"
     "@nestjs/platform-express" "^11.0.1"
@@ -2857,6 +2872,11 @@ dotenv@^16.4.5, dotenv@^16.4.7:
   version "16.5.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-16.5.0.tgz#092b49f25f808f020050051d1ff258e404c78692"
   integrity sha512-m/C+AwOAr9/W1UOIZUo232ejMNnJAJtYQjUbHoNTBNTJSvqzzDh7vnrei3o3r3m9blf6ZoDkvcw0VmozNRFJxg==
+
+dotenv@^17.2.3:
+  version "17.2.3"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-17.2.3.tgz#ad995d6997f639b11065f419a22fabf567cdb9a2"
+  integrity sha512-JVUnt+DUIzu87TABbhPmNfVdBDt18BLOWjMUFJMSi/Qqg7NTYtabbvSNJGOJ7afbRuv9D/lngizHtP7QyLQ+9w==
 
 dprint-node@^1.0.8:
   version "1.0.8"

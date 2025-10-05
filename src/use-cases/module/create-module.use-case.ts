@@ -39,7 +39,7 @@ export class CreateModuleUseCase {
     const product = await this.productRepo.findOne({
       productId: input.module.productId,
     });
-    if (product) {
+    if (!product) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
         message: 'Product not found',

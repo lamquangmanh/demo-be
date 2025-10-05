@@ -52,11 +52,11 @@ export class UpdateModuleUseCase {
       });
     }
 
-    // check product exists
+    // check product not found
     const product = await this.productRepo.findOne({
       productId: input.module.productId,
     });
-    if (product) {
+    if (!product) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
         message: 'Product not found',
