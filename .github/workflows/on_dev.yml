@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - 'dev'
+      - "dev"
 
 jobs:
   call_ci_process:
@@ -19,7 +19,7 @@ jobs:
     uses: lamquangmanh/github-workflows/.github/workflows/cd.yml@main
     with:
       environment: dev
-      repository_path: 'quangmanhlam/user-be-dev'
+      repository_path: "quangmanhlam/user-be-dev"
     secrets: inherit
 
   call_k8s_process:
@@ -28,6 +28,6 @@ jobs:
     uses: lamquangmanh/github-workflows/.github/workflows/k8s.yml@main
     with:
       environment: dev
-      gitops_path: 'microk8s/microservice/overlays/user-be/dev'
-      repository_path: 'quangmanhlam/user-be-dev'
+      gitops_path: "microk8s/microservice/apps/user-be/overlays/dev"
+      repository_path: "quangmanhlam/user-be-dev"
     secrets: inherit
