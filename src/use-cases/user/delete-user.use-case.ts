@@ -3,7 +3,11 @@ import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
 
 // import from common
-import { USER_REPOSITORY, UserStatus } from '@/common/constants';
+import {
+  USER_REPOSITORY,
+  UserStatus,
+  USER_NOT_FOUND,
+} from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -25,9 +29,9 @@ export class DeleteUserUseCase {
     if (!user) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'User not found',
+        message: USER_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'userId', error: 'User not found' }],
+          fields: [USER_NOT_FOUND],
         },
       });
     }

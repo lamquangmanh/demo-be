@@ -1,0 +1,14 @@
+node_modules
+.git
+.next/cache
+dist
+coverage
+logs
+*.log
+Dockerfile
+.dockerignore
+tests
+test
+tmp
+env
+*.env

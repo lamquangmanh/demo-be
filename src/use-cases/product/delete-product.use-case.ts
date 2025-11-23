@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
 
 // import from common
-import { PRODUCT_REPOSITORY } from '@/common/constants';
+import { PRODUCT_REPOSITORY, PRODUCT_NOT_FOUND } from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -25,9 +25,9 @@ export class DeleteProductUseCase {
     if (!product) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Product not found',
+        message: PRODUCT_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'productId', error: 'Product not found' }],
+          fields: [PRODUCT_NOT_FOUND],
         },
       });
     }

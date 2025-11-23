@@ -3,7 +3,12 @@ import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
 
 // import from common
-import { MODULE_REPOSITORY, PRODUCT_REPOSITORY } from '@/common/constants';
+import {
+  MODULE_REPOSITORY,
+  PRODUCT_REPOSITORY,
+  PRODUCT_NOT_FOUND,
+  MODULE_NAME_ALREADY_EXISTS,
+} from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -28,9 +33,9 @@ export class CreateModuleUseCase {
     if (module) {
       throw new GrpcCustomException({
         code: status.ALREADY_EXISTS,
-        message: 'Module name already exists',
+        message: MODULE_NAME_ALREADY_EXISTS.error,
         extra: {
-          fields: [{ field: 'name', error: 'Module name already exists' }],
+          fields: [MODULE_NAME_ALREADY_EXISTS],
         },
       });
     }
@@ -42,9 +47,9 @@ export class CreateModuleUseCase {
     if (!product) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Product not found',
+        message: PRODUCT_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'productId', error: 'Product not found' }],
+          fields: [PRODUCT_NOT_FOUND],
         },
       });
     }

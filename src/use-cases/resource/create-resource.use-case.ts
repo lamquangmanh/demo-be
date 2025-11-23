@@ -5,7 +5,11 @@ import { DataSource, EntityManager } from 'typeorm';
 
 // import from common
 import { MODULE_REPOSITORY, RESOURCE_REPOSITORY } from '@/common/constants';
-import { GrpcCustomException } from '@/common';
+import {
+  GrpcCustomException,
+  RESOURCE_NAME_ALREADY_EXISTS,
+  MODULE_NOT_FOUND,
+} from '@/common';
 
 // import from domain
 import { ModuleRepository, ResourceRepository } from '@/domain/repositories';
@@ -37,9 +41,9 @@ export class CreateResourceUseCase {
     if (!module) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Module not found',
+        message: MODULE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'moduleId', error: 'Module not found' }],
+          fields: [MODULE_NOT_FOUND],
         },
       });
     }
@@ -51,9 +55,9 @@ export class CreateResourceUseCase {
     if (resource) {
       throw new GrpcCustomException({
         code: status.ALREADY_EXISTS,
-        message: 'Resource name already exists',
+        message: RESOURCE_NAME_ALREADY_EXISTS.error,
         extra: {
-          fields: [{ field: 'name', error: 'Resource name already exists' }],
+          fields: [RESOURCE_NAME_ALREADY_EXISTS],
         },
       });
     }
@@ -62,34 +66,36 @@ export class CreateResourceUseCase {
   async execute(
     input: CreateResourceRequestDto,
   ): Promise<CreateResourceSuccessResponse> {
-    return this.dataSource.transaction(async (entityManager: EntityManager) => {
-      await this.validate(input);
+    return await this.dataSource.transaction(
+      async (entityManager: EntityManager) => {
+        await this.validate(input);
 
-      const resourceRepository = entityManager.getRepository(ResourceEntity);
-      const actionRepository = entityManager.getRepository(ActionEntity);
+        const resourceRepository = entityManager.getRepository(ResourceEntity);
+        const actionRepository = entityManager.getRepository(ActionEntity);
 
-      // create resource
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { actions, ...resourceData } = input.resource;
-      const data = resourceRepository.create({
-        ...resourceData,
-        createdUserId: input.userId,
-        updatedUserId: input.userId,
-      });
-      const resource = await resourceRepository.save(data);
-
-      // create actions of resource
-      for (const action of input.resource.actions) {
-        const actionData = actionRepository.create({
-          ...action,
-          resourceId: resource.resourceId,
+        // create resource
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { actions, ...resourceData } = input.resource;
+        const data = resourceRepository.create({
+          ...resourceData,
           createdUserId: input.userId,
           updatedUserId: input.userId,
         });
-        await actionRepository.save(actionData);
-      }
+        const resource = await resourceRepository.save(data);
 
-      return { resource: this.resourceRepo.convertDateToISOString(resource) };
-    });
+        // create actions of resource
+        for (const action of input.resource.actions) {
+          const actionData = actionRepository.create({
+            ...action,
+            resourceId: resource.resourceId,
+            createdUserId: input.userId,
+            updatedUserId: input.userId,
+          });
+          await actionRepository.save(actionData);
+        }
+
+        return { resource: this.resourceRepo.convertDateToISOString(resource) };
+      },
+    );
   }
 }

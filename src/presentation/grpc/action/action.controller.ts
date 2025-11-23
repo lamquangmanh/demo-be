@@ -1,5 +1,5 @@
 // import from libraries
-import { Controller } from '@nestjs/common';
+import { Controller, Body } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 
 // import from use-cases
@@ -34,8 +34,12 @@ export class ActionController {
   ) {}
 
   @GrpcMethod('ActionService', 'GetAction')
-  async getAction({ ActionId }): Promise<ActionEntity | null> {
-    return await this.getActionUseCase.execute(ActionId);
+  async getAction({
+    actionId,
+  }: {
+    actionId: string;
+  }): Promise<ActionEntity | null> {
+    return await this.getActionUseCase.execute(actionId);
   }
 
   @GrpcMethod('ActionService', 'GetActions')
@@ -61,4 +65,13 @@ export class ActionController {
     const dto = await validateDto(data, DeleteActionRequestDto);
     return this.deleteActionUseCase.execute(dto);
   }
+
+  // @GrpcMethod('ActionService', 'DeleteAction')
+  // async deleteAction(
+  //   @Body() data: DeleteActionRequestDto,
+  // ): Promise<DeleteSuccessResponse> {
+  //   // const dto = await validateDto(data, DeleteActionRequestDto);
+  //   console.log('Deleting action with data:', data);
+  //   return this.deleteActionUseCase.execute(data);
+  // }
 }

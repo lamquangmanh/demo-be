@@ -1,5 +1,6 @@
 export * from './action.entity';
 export * from './module.entity';
+export * from './online-user.entity';
 export * from './permission.entity';
 export * from './resource.entity';
 export * from './role.entity';

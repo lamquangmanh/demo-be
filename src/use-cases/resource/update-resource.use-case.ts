@@ -8,6 +8,9 @@ import {
   RESOURCE_REPOSITORY,
   MODULE_REPOSITORY,
   ACTION_REPOSITORY,
+  MODULE_NOT_FOUND,
+  RESOURCE_NAME_ALREADY_EXISTS,
+  ACTION_NOT_FOUND,
 } from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
@@ -50,9 +53,9 @@ export class UpdateResourceUseCase {
     if (!module) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Module not found',
+        message: MODULE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'moduleId', error: 'Module not found' }],
+          fields: [MODULE_NOT_FOUND],
         },
       });
     }
@@ -65,9 +68,9 @@ export class UpdateResourceUseCase {
     if (resource) {
       throw new GrpcCustomException({
         code: status.ALREADY_EXISTS,
-        message: 'Resource name already exists',
+        message: RESOURCE_NAME_ALREADY_EXISTS.error,
         extra: {
-          fields: [{ field: 'name', error: 'Resource name already exists' }],
+          fields: [RESOURCE_NAME_ALREADY_EXISTS],
         },
       });
     }
@@ -85,9 +88,9 @@ export class UpdateResourceUseCase {
     if (actions.length < listActionExists.length) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Action not found',
+        message: ACTION_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'actionId', error: 'Action not found' }],
+          fields: [ACTION_NOT_FOUND],
         },
       });
     }

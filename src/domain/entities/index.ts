@@ -4,6 +4,7 @@ export * from './module.entity';
 export * from './permission.entity';
 export * from './resource.entity';
 export * from './role.entity';
+export * from './online-user.entity';
 export * from './user-role.entity';
 export * from './user.entity';
 export * from './product.entity';

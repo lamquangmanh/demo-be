@@ -27,3 +27,13 @@ export interface JwtPayload {
   userId: string;
   email: string;
 }
+
+export interface MessageQueuePayload<T> {
+  metadata: {
+    userId: string;
+    userEmail?: string;
+    socketId?: string;
+    [key: string]: any;
+  };
+  payload: T;
+}

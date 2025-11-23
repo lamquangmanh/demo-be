@@ -8,6 +8,9 @@ import {
   ROLE_REPOSITORY,
   PERMISSION_REPOSITORY,
   RESOURCE_REPOSITORY,
+  ACTION_NOT_FOUND,
+  RESOURCE_NOT_FOUND,
+  ROLE_NOT_FOUND,
 } from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
@@ -45,9 +48,9 @@ export class UpdatePermissionUseCase {
     if (!action) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Action not found',
+        message: ACTION_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'actionId', error: 'Action not found' }],
+          fields: [ACTION_NOT_FOUND],
         },
       });
     }
@@ -59,9 +62,9 @@ export class UpdatePermissionUseCase {
     if (!role) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Role not found',
+        message: ROLE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'roleId', error: 'Role not found' }],
+          fields: [ROLE_NOT_FOUND],
         },
       });
     }
@@ -73,9 +76,9 @@ export class UpdatePermissionUseCase {
     if (!resource) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Resource not found',
+        message: RESOURCE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'resourceId', error: 'Resource not found' }],
+          fields: [RESOURCE_NOT_FOUND],
         },
       });
     }

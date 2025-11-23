@@ -11,6 +11,10 @@ import {
   PERMISSION_REPOSITORY,
   ACTION_REPOSITORY,
   RESOURCE_REPOSITORY,
+  MODULE_NOT_FOUND,
+  ROLE_NAME_ALREADY_EXISTS,
+  ACTION_NOT_FOUND,
+  RESOURCE_NOT_FOUND,
 } from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
@@ -60,9 +64,9 @@ export class UpdateRoleUseCase {
     if (!module) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Module not found',
+        message: MODULE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'moduleId', error: 'Module not found' }],
+          fields: [MODULE_NOT_FOUND],
         },
       });
     }
@@ -75,9 +79,9 @@ export class UpdateRoleUseCase {
     if (role) {
       throw new GrpcCustomException({
         code: status.ALREADY_EXISTS,
-        message: 'Role name already exists',
+        message: ROLE_NAME_ALREADY_EXISTS.error,
         extra: {
-          fields: [{ field: 'name', error: 'Role name already exists' }],
+          fields: [ROLE_NAME_ALREADY_EXISTS],
         },
       });
     }
@@ -93,9 +97,9 @@ export class UpdateRoleUseCase {
     if (actionIds.length !== actions.length) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'List action not found',
+        message: ACTION_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'actionId', error: 'List action not found' }],
+          fields: [ACTION_NOT_FOUND],
         },
       });
     }
@@ -111,9 +115,9 @@ export class UpdateRoleUseCase {
     if (resourceIds.length !== resources.length) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'List resource not found',
+        message: RESOURCE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'resourceId', error: 'List resource not found' }],
+          fields: [RESOURCE_NOT_FOUND],
         },
       });
     }

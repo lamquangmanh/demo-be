@@ -29,10 +29,9 @@ async function bootstrap() {
   });
 
   await app.startAllMicroservices();
-  // await app.listen(Number(process.env.PORT ?? 3000));
   await app.listen(
     +(process.env.PORT ?? 3000),
-    process.env.GRPC_HOST ?? 'localhost',
+    process.env.HTTP_HOST ?? '0.0.0.0',
   );
 }
 

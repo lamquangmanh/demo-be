@@ -3,7 +3,12 @@ import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
 
 // import from common
-import { ACTION_REPOSITORY, RESOURCE_REPOSITORY } from '@/common/constants';
+import {
+  ACTION_REPOSITORY,
+  RESOURCE_REPOSITORY,
+  ACTION_NOT_FOUND,
+  RESOURCE_NOT_FOUND,
+} from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -29,9 +34,9 @@ export class UpdateActionUseCase {
     if (!action) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Action not found',
+        message: ACTION_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'actionId', error: 'Action not found' }],
+          fields: [ACTION_NOT_FOUND],
         },
       });
     }
@@ -44,9 +49,9 @@ export class UpdateActionUseCase {
     if (!resource) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Resource not found',
+        message: RESOURCE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'resourceId', error: 'Resource not found' }],
+          fields: [RESOURCE_NOT_FOUND],
         },
       });
     }

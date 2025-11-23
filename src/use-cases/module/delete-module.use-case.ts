@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
 
 // import from common
-import { MODULE_REPOSITORY } from '@/common/constants';
+import { MODULE_REPOSITORY, MODULE_NOT_FOUND } from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -25,9 +25,9 @@ export class DeleteModuleUseCase {
     if (!module) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Module not found',
+        message: MODULE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'moduleId', error: 'Module not found' }],
+          fields: [MODULE_NOT_FOUND],
         },
       });
     }

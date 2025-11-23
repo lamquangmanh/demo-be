@@ -8,6 +8,7 @@ export const ROLE_REPOSITORY = 'ROLE_REPOSITORY';
 export const USER_ROLE_REPOSITORY = 'USER_ROLE_REPOSITORY';
 export const USER_REPOSITORY = 'USER_REPOSITORY';
 export const PRODUCT_REPOSITORY = 'PRODUCT_REPOSITORY';
+export const ONLINE_USER_REPOSITORY = 'ONLINE_USER_REPOSITORY';
 
 export const USER_STATUS_MAPPING = {
   1: UserStatus.ACTIVE,
@@ -41,4 +42,9 @@ export const REQUEST_TYPE_MAPPING = {
   4: RequestType.WEBSOCKET,
 };
 
+// Queue and BFF Redis Client Constants
 export const REDIS_CLIENT = 'REDIS_CLIENT';
+export const QUEUE_REDIS_CLIENT = 'QUEUE_REDIS_CLIENT';
+
+export const BFF_TO_BE_QUEUE = 'BFF_TO_BE_QUEUE';
+export const BE_TO_BFF_QUEUE = 'BE_TO_BFF_QUEUE';

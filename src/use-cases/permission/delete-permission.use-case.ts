@@ -3,7 +3,10 @@ import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
 
 // import from common
-import { PERMISSION_REPOSITORY } from '@/common/constants';
+import {
+  PERMISSION_REPOSITORY,
+  PERMISSION_NOT_FOUND,
+} from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -25,9 +28,9 @@ export class DeletePermissionUseCase {
     if (!permission) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Permission not found',
+        message: PERMISSION_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'permissionId', error: 'permission not found' }],
+          fields: [PERMISSION_NOT_FOUND],
         },
       });
     }

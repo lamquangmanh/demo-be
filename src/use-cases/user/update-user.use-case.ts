@@ -10,6 +10,8 @@ import {
   UserStatus,
   USER_ROLE_REPOSITORY,
   ROLE_REPOSITORY,
+  USER_NOT_FOUND,
+  ROLE_NOT_FOUND,
 } from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
@@ -43,9 +45,9 @@ export class UpdateUserUseCase {
     if (!user) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'User not found',
+        message: USER_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'userId', error: 'User not found' }],
+          fields: [USER_NOT_FOUND],
         },
       });
     }
@@ -58,15 +60,8 @@ export class UpdateUserUseCase {
     if (roleIds.length > roles.length) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Role not found',
-        extra: {
-          fields: [
-            {
-              field: 'roleIds',
-              error: 'Roles not found',
-            },
-          ],
-        },
+        message: ROLE_NOT_FOUND.error,
+        extra: { fields: [ROLE_NOT_FOUND] },
       });
     }
   }

@@ -4,7 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { status } from '@grpc/grpc-js';
 
 // import from common
-import { USER_REPOSITORY } from '@/common/constants';
+import { USER_REPOSITORY, USER_NOT_FOUND } from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -27,9 +27,9 @@ export class ChangePasswordUseCase {
     if (!user) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'User not found',
+        message: USER_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'userId', error: 'User not found' }],
+          fields: [USER_NOT_FOUND],
         },
       });
     }

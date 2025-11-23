@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
 
 // import from common
-import { USER_ROLE_REPOSITORY } from '@/common/constants';
+import { USER_ROLE_REPOSITORY, USER_ROLE_NOT_FOUND } from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -25,9 +25,9 @@ export class DeleteUserRoleUseCase {
     if (!userRole) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'User role not found',
+        message: USER_ROLE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'resourceId', error: 'User role not found' }],
+          fields: [USER_ROLE_NOT_FOUND],
         },
       });
     }

@@ -9,6 +9,7 @@ import {
   USER_REPOSITORY,
   UserStatus,
   USER_ROLE_REPOSITORY,
+  USER_EMAIL_ALREADY_EXISTS,
 } from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
@@ -34,9 +35,9 @@ export class CreateUserUseCase {
     if (user) {
       throw new GrpcCustomException({
         code: status.ALREADY_EXISTS,
-        message: 'Email is already in use',
+        message: USER_EMAIL_ALREADY_EXISTS.error,
         extra: {
-          fields: [{ field: 'email', error: 'Email is already in use' }],
+          fields: [USER_EMAIL_ALREADY_EXISTS],
         },
       });
     }

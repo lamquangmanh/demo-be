@@ -48,16 +48,11 @@ export class LoggerInterceptor implements NestInterceptor {
       tap((data: any) => {
         logData.elapsed = Date.now() - now;
         logData.response = data;
-        this.logger.log(
-          `${logData.time} - ${logData.elapsed}ms - ${JSON.stringify(logData)}`,
-        );
       }),
       catchError((err) => {
         logData.elapsed = Date.now() - now;
         logData.error = err;
-        this.logger.error(
-          `${logData.time} - ${logData.elapsed}ms - ${JSON.stringify(logData)}`,
-        );
+        this.logger.error(JSON.stringify(logData));
         return throwError(() => err);
       }),
     );

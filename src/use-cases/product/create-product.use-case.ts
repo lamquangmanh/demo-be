@@ -1,10 +1,12 @@
 // import from libraries
 import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
-import { In } from 'typeorm';
 
 // import from common
-import { PRODUCT_REPOSITORY } from '@/common/constants';
+import {
+  PRODUCT_REPOSITORY,
+  PRODUCT_NAME_ALREADY_EXISTS,
+} from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -26,9 +28,9 @@ export class CreateProductUseCase {
     if (product) {
       throw new GrpcCustomException({
         code: status.ALREADY_EXISTS,
-        message: 'Product name already exists',
+        message: PRODUCT_NAME_ALREADY_EXISTS.error,
         extra: {
-          fields: [{ field: 'name', error: 'Product name already exists' }],
+          fields: [PRODUCT_NAME_ALREADY_EXISTS],
         },
       });
     }

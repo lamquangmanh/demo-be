@@ -16,12 +16,22 @@ export class GetModulesUseCase {
   private readonly moduleRepo: ModuleRepository;
 
   async execute(data: GetListRequestDto): Promise<GetModulesSuccessResponse> {
+    const hasSortOrFilterWithRelation = data.sorts?.find(
+      (sort) => sort.field === 'product.name',
+    );
     return this.moduleRepo.pagination(data.filters, {
       ...data.pagination,
       sortBy: data.sorts,
-      sortColumns: ['createdAt', 'updatedAt', 'name', 'moduleId'],
-      filterColumns: ['name', 'moduleId'],
+      sortColumns: [
+        'createdAt',
+        'updatedAt',
+        'name',
+        'moduleId',
+        'product.name',
+      ],
+      filterColumns: ['name', 'moduleId', 'productId'],
       isConvertDate: true,
+      relations: hasSortOrFilterWithRelation ? ['product'] : undefined,
     });
   }
 }

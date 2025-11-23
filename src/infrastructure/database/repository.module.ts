@@ -14,6 +14,7 @@ import {
   USER_ROLE_REPOSITORY,
   USER_REPOSITORY,
   PRODUCT_REPOSITORY,
+  ONLINE_USER_REPOSITORY,
 } from '@/common/constants';
 
 // import from infrastructure
@@ -26,6 +27,7 @@ import {
   UserRepository,
   UserRoleRepository,
   ProductRepository,
+  OnlineUserRepository,
 } from './repositories';
 
 import {
@@ -37,6 +39,7 @@ import {
   UserEntity,
   UserRoleEntity,
   ProductEntity,
+  OnlineUserEntity,
 } from './entities';
 
 @Module({
@@ -72,6 +75,7 @@ import {
       UserEntity,
       UserRoleEntity,
       ProductEntity,
+      OnlineUserEntity,
     ]),
   ],
   providers: [
@@ -83,6 +87,7 @@ import {
     { provide: USER_REPOSITORY, useClass: UserRepository },
     { provide: USER_ROLE_REPOSITORY, useClass: UserRoleRepository },
     { provide: PRODUCT_REPOSITORY, useClass: ProductRepository },
+    { provide: ONLINE_USER_REPOSITORY, useClass: OnlineUserRepository },
   ],
   exports: [
     ACTION_REPOSITORY,
@@ -93,6 +98,7 @@ import {
     USER_ROLE_REPOSITORY,
     USER_REPOSITORY,
     PRODUCT_REPOSITORY,
+    ONLINE_USER_REPOSITORY,
   ],
 })
 export class RepositoryModule {

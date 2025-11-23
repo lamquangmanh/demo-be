@@ -104,6 +104,23 @@ export abstract class BaseRepository<T extends ObjectLiteral>
     return newData;
   }
 
+  dectectUseQueryBuilder(filter: Filter[], option: PaginationOption) {
+    // if option.isUseQueryBuilder is true, return true
+    if (option?.isUseQueryBuilder) return true;
+
+    // if any filter field contains a dot, return true
+    const hasFilterWithRelation = filter.find((f) => f.field.includes('.'));
+    if (hasFilterWithRelation) return true;
+
+    // if any sort field contains a dot, return true
+    const hasSortWithRelation = option?.sortBy?.find((s) =>
+      s.field.includes('.'),
+    );
+    if (hasSortWithRelation) return true;
+
+    return false;
+  }
+
   /**
    * get pagination data with filter
    * @param filter
@@ -126,14 +143,45 @@ export abstract class BaseRepository<T extends ObjectLiteral>
     // build filter object
     const filterParams = this.buildFilter(filter, option?.filterColumns ?? []);
 
-    // get data
-    const [result, total] = await this.repository.findAndCount({
-      where: filterParams,
-      skip,
-      take,
-      order: sort ?? undefined,
-      select: option?.select ?? undefined,
-    });
+    const isDetectedUseQueryBuilder = this.dectectUseQueryBuilder(
+      filter,
+      option,
+    );
+
+    let result: T[] = [];
+    let total = 0;
+    // using query builder for complex query, where relations are nested or multiple, sorting on relation columns
+    if (option?.isUseQueryBuilder || isDetectedUseQueryBuilder) {
+      const resultData = await this.paginationQueryBuilder(
+        filterParams,
+        option,
+        skip,
+        take,
+        sort,
+      );
+      result = resultData[0];
+      total = resultData[1];
+    } else {
+      const resultData = await this.repository.findAndCount({
+        where: filterParams,
+        skip,
+        take,
+        order: sort ?? undefined,
+        select: option?.select ?? undefined,
+        relations: option?.relations ?? undefined,
+        withDeleted: option?.withDeleted ?? undefined,
+      });
+      result = resultData[0];
+      total = resultData[1];
+
+      // enable logging
+      if (option.logging) {
+        console.log(
+          'Query Builder SQL: ',
+          this.repository.createQueryBuilder().getSql(),
+        );
+      }
+    }
 
     let newResult = result;
     // convert date to iso string
@@ -150,6 +198,53 @@ export abstract class BaseRepository<T extends ObjectLiteral>
         limit: limit,
       },
     };
+  }
+
+  async paginationQueryBuilder(
+    filterParams: FindOptionsWhere<T>,
+    option: PaginationOption,
+    skip: number,
+    take: number,
+    sort: FindOptionsOrder<T>,
+  ): Promise<[T[], number]> {
+    const queryBuilder = this.repository.createQueryBuilder();
+    queryBuilder.where(filterParams);
+
+    // add relations
+    if (option?.relations && option.relations.length > 0) {
+      for (const relation of option.relations) {
+        queryBuilder.leftJoinAndSelect(
+          `${queryBuilder.alias}.${relation}`,
+          relation,
+        );
+      }
+    }
+
+    // add sorting
+    if (sort && Object.keys(sort).length > 0) {
+      for (const [key, value] of Object.entries(sort)) {
+        queryBuilder.addOrderBy(key, value as 'ASC' | 'DESC');
+      }
+    }
+
+    // add select
+    if (option.select && option.select.length > 0) {
+      queryBuilder.select(option.select);
+    }
+
+    // add pagination
+    queryBuilder.skip(skip).take(take);
+
+    // include soft-deleted rows
+    if (option.withDeleted) {
+      queryBuilder.withDeleted();
+    }
+
+    // enable logging
+    if (option.logging) {
+      console.log('Query Builder SQL: ', queryBuilder.getSql());
+    }
+    return queryBuilder.getManyAndCount();
   }
 
   getValueOfFilter(value: any) {

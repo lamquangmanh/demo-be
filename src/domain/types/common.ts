@@ -12,11 +12,13 @@ export type PaginationOption = {
   // fields using to filter
   filterColumns?: string[];
 
-  includeDeleted?: boolean; // default is false
+  withDeleted?: boolean; // default is false
   relations?: string[]; // default is []
   select?: string[]; // default is []
 
   isConvertDate?: boolean; // default is false
+  logging?: boolean; // default is false
+  isUseQueryBuilder?: boolean; // default is false
 };
 
 export type PaginationInfo = {

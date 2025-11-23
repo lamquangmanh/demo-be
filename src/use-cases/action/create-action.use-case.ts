@@ -4,7 +4,7 @@ import { status } from '@grpc/grpc-js';
 
 // import from common
 import { ACTION_REPOSITORY, RESOURCE_REPOSITORY } from '@/common/constants';
-import { GrpcCustomException } from '@/common';
+import { GrpcCustomException, RESOURCE_NOT_FOUND } from '@/common';
 
 // import from domain
 import { ActionRepository, ResourceRepository } from '@/domain/repositories';
@@ -29,9 +29,9 @@ export class CreateActionUseCase {
     if (!resource) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Resource not found',
+        message: RESOURCE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'resourceId', error: 'Resource not found' }],
+          fields: [RESOURCE_NOT_FOUND],
         },
       });
     }

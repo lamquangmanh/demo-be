@@ -16,11 +16,21 @@ export class GetResourcesUseCase {
   private readonly moduleRepo: ResourceRepository;
 
   async execute(data: GetListRequestDto): Promise<GetResourcesSuccessResponse> {
+    const hasSortOrFilterWithRelation = data.sorts?.find(
+      (sort) => sort.field === 'module.name',
+    );
     return this.moduleRepo.pagination(data.filters, {
       ...data.pagination,
       sortBy: data.sorts,
-      sortColumns: ['createdAt', 'updatedAt', 'name', 'moduleId'],
+      sortColumns: [
+        'createdAt',
+        'updatedAt',
+        'name',
+        'moduleId',
+        'module.name',
+      ],
       filterColumns: ['name', 'moduleId'],
+      relations: hasSortOrFilterWithRelation ? ['module'] : undefined,
       isConvertDate: true,
     });
   }

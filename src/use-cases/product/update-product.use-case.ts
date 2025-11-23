@@ -1,10 +1,14 @@
 // import from libraries
 import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
-import { Not, Equal, In } from 'typeorm';
+import { Not, Equal } from 'typeorm';
 
 // import from common
-import { PRODUCT_REPOSITORY } from '@/common/constants';
+import {
+  PRODUCT_REPOSITORY,
+  PRODUCT_NOT_FOUND,
+  PRODUCT_NAME_ALREADY_EXISTS,
+} from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -27,9 +31,9 @@ export class UpdateProductUseCase {
     if (!product) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Product not found',
+        message: PRODUCT_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'productId', error: 'Product not found' }],
+          fields: [PRODUCT_NOT_FOUND],
         },
       });
     }
@@ -42,9 +46,9 @@ export class UpdateProductUseCase {
     if (productName) {
       throw new GrpcCustomException({
         code: status.ALREADY_EXISTS,
-        message: 'Product name already exists',
+        message: PRODUCT_NAME_ALREADY_EXISTS.error,
         extra: {
-          fields: [{ field: 'name', error: 'Product name already exists' }],
+          fields: [PRODUCT_NAME_ALREADY_EXISTS],
         },
       });
     }

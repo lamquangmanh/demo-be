@@ -3,7 +3,11 @@ import { Inject } from '@nestjs/common';
 import { status } from '@grpc/grpc-js';
 
 // import from common
-import { ROLE_REPOSITORY, PERMISSION_REPOSITORY } from '@/common/constants';
+import {
+  ROLE_REPOSITORY,
+  PERMISSION_REPOSITORY,
+  ROLE_NOT_FOUND,
+} from '@/common/constants';
 import { GrpcCustomException } from '@/common';
 
 // import from domain
@@ -28,9 +32,9 @@ export class DeleteRoleUseCase {
     if (!role) {
       throw new GrpcCustomException({
         code: status.NOT_FOUND,
-        message: 'Role not found',
+        message: ROLE_NOT_FOUND.error,
         extra: {
-          fields: [{ field: 'roleId', error: 'Role not found' }],
+          fields: [ROLE_NOT_FOUND],
         },
       });
     }

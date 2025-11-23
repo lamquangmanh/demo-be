@@ -16,6 +16,7 @@ import { BaseEntity } from './base.entity';
 // import from common
 import { UserStatus } from '@/common/constants';
 import { UserRoleEntity } from './user-role.entity';
+import { OnlineUserEntity } from './online-user.entity';
 
 const ENTITY_NAME = 'users';
 @Entity(ENTITY_NAME)
@@ -79,4 +80,7 @@ export class UserEntity extends BaseEntity implements IUserEntity {
 
   @OneToMany(() => UserRoleEntity, (userRole) => userRole.user)
   userRoles?: UserRoleEntity[];
+
+  @OneToMany(() => OnlineUserEntity, (onlineUser) => onlineUser.user)
+  onlineUsers?: OnlineUserEntity[];
 }
