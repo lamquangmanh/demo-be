@@ -9,14 +9,14 @@ on:
 jobs:
   call_ci_process:
     name: Run CI Process
-    uses: lamquangmanh/github-workflows/.github/workflows/ci.yml@main
+    uses: lamquangmanh/gitops-config/.github/workflows/ci.yml@main
     with:
       environment: dev
     secrets: inherit
 
   call_cd_process:
     name: Run Artifact Registry Process
-    uses: lamquangmanh/github-workflows/.github/workflows/cd.yml@main
+    uses: lamquangmanh/gitops-config/.github/workflows/cd.yml@main
     with:
       environment: dev
       repository_path: "quangmanhlam/user-be-dev"
@@ -25,7 +25,7 @@ jobs:
   call_k8s_process:
     name: Run K8s Process
     needs: call_cd_process
-    uses: lamquangmanh/github-workflows/.github/workflows/k8s.yml@main
+    uses: lamquangmanh/gitops-config/.github/workflows/k8s.yml@main
     with:
       environment: dev
       gitops_path: "microk8s/microservice/apps/user-be/overlays/dev"
