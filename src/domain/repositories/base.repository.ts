@@ -5,7 +5,10 @@ import {
   FindOptionsOrder,
   FindOneOptions,
   FindManyOptions,
+  InsertResult,
 } from 'typeorm';
+import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import type { UpsertOptions } from 'typeorm/repository/UpsertOptions';
 
 // import from domain
 import { PaginationOption, PaginationResult } from '../types';
@@ -29,8 +32,13 @@ export interface BaseRepository<T> {
   createMany(data: Partial<T>[]): Promise<T[]>;
 
   updateOne(id: string, data: Partial<T>): Promise<UpdateResult>;
+  upsert(
+    entityOrEntities: QueryDeepPartialEntity<T> | QueryDeepPartialEntity<T>[],
+    conflictPathsOrOptions: string[] | UpsertOptions<T>,
+  ): Promise<InsertResult>;
 
   deleteById(id: string): Promise<DeleteResult>;
+  deleteBy(filter: FindOptionsWhere<T>): Promise<DeleteResult>;
   softDeleteById(id: string, data?: Partial<T>): Promise<UpdateResult>;
   softDeleteBy(
     filter: FindOptionsWhere<T>,

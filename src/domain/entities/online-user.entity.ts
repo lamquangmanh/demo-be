@@ -1,8 +1,9 @@
 import { BaseEntity } from './base.entity';
 
 export interface OnlineUserEntity extends BaseEntity {
-  userOnlineId: string;
+  onlineUserId: string;
   userId: string;
   socketId: string;
+  deviceInfo?: string;
   currentPageUrl?: string;
 }

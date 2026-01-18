@@ -61,7 +61,7 @@ import {
           migrations: [join(__dirname, './migrations/*{.ts,.js}')],
           migrationsRun: true,
         };
-        console.log('Database configuration: ', configDB);
+        // console.log('Database configuration: ', configDB);
         return configDB;
       },
       inject: [ConfigService],

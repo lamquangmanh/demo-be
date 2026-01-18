@@ -41,10 +41,3 @@ export const REQUEST_TYPE_MAPPING = {
   3: RequestType.GRPC,
   4: RequestType.WEBSOCKET,
 };
-
-// Queue and BFF Redis Client Constants
-export const REDIS_CLIENT = 'REDIS_CLIENT';
-export const QUEUE_REDIS_CLIENT = 'QUEUE_REDIS_CLIENT';
-
-export const BFF_TO_BE_QUEUE = 'BFF_TO_BE_QUEUE';
-export const BE_TO_BFF_QUEUE = 'BE_TO_BFF_QUEUE';

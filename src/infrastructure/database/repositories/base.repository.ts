@@ -16,7 +16,10 @@ import {
   FindOptionsWhere,
   FindOneOptions,
   FindManyOptions,
+  InsertResult,
 } from 'typeorm';
+import type { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import type { UpsertOptions } from 'typeorm/repository/UpsertOptions';
 import { toString } from 'lodash';
 
 // import from domain
@@ -62,8 +65,19 @@ export abstract class BaseRepository<T extends ObjectLiteral>
     return this.repository.update(id, data);
   }
 
+  async upsert(
+    entityOrEntities: QueryDeepPartialEntity<T> | QueryDeepPartialEntity<T>[],
+    conflictPathsOrOptions: string[] | UpsertOptions<T>,
+  ): Promise<InsertResult> {
+    return this.repository.upsert(entityOrEntities, conflictPathsOrOptions);
+  }
+
   async deleteById(id: string): Promise<DeleteResult> {
     return this.repository.delete(id);
+  }
+
+  async deleteBy(filter: FindOptionsWhere<T>): Promise<DeleteResult> {
+    return this.repository.delete(filter);
   }
 
   async softDeleteById(id: string, data?: Partial<T>): Promise<UpdateResult> {
@@ -104,7 +118,7 @@ export abstract class BaseRepository<T extends ObjectLiteral>
     return newData;
   }
 
-  dectectUseQueryBuilder(filter: Filter[], option: PaginationOption) {
+  detectUseQueryBuilder(filter: Filter[], option: PaginationOption) {
     // if option.isUseQueryBuilder is true, return true
     if (option?.isUseQueryBuilder) return true;
 
@@ -143,7 +157,7 @@ export abstract class BaseRepository<T extends ObjectLiteral>
     // build filter object
     const filterParams = this.buildFilter(filter, option?.filterColumns ?? []);
 
-    const isDetectedUseQueryBuilder = this.dectectUseQueryBuilder(
+    const isDetectedUseQueryBuilder = this.detectUseQueryBuilder(
       filter,
       option,
     );

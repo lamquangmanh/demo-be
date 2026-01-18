@@ -35,5 +35,6 @@ export interface MessageQueuePayload<T> {
     socketId?: string;
     [key: string]: any;
   };
+  eventType?: string;
   payload: T;
 }

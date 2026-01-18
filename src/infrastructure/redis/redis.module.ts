@@ -2,7 +2,7 @@
 import { Module, Global } from '@nestjs/common';
 
 // import from common/configs
-import { REDIS_PROVIDER } from '../../common/configs/config-redis';
+import { REDIS_PROVIDER } from '../../common/configs';
 
 @Global()
 @Module({

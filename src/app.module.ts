@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
+import { BullModule } from '@nestjs/bullmq';
 
 // load config
-import { configValidationSchema } from './common/configs/config-validation-schema';
+import { configValidationSchema, queueConnection } from './common/configs';
 
 // import common module
 import { RedisModule } from './infrastructure/redis/redis.module';
@@ -22,6 +23,9 @@ import { MenuModule } from './presentation/grpc/menu/menu.module';
 import { ProductModule } from './presentation/grpc/product/product.module';
 import { PermissionModule } from './presentation/grpc/permission/permission.module';
 
+// import queue modules
+import { WebSocketModule } from './presentation/queue/websocket/websocket.module';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,6 +37,9 @@ import { PermissionModule } from './presentation/grpc/permission/permission.modu
       global: true,
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: `${process.env.JWT_EXPIRATION}s` },
+    }),
+    BullModule.forRoot({
+      connection: queueConnection,
     }),
     RedisModule,
     RepositoryModule,
@@ -47,6 +54,7 @@ import { PermissionModule } from './presentation/grpc/permission/permission.modu
     ProductModule,
     PermissionModule,
     HealthModule,
+    WebSocketModule,
   ],
   providers: [],
 })
