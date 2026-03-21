@@ -27,7 +27,7 @@ export class GetUsersUseCase {
         'status',
         'phone',
       ],
-      filterColumns: ['username', 'email', 'status'],
+      filterColumns: ['username', 'email', 'status', 'phone'],
       isConvertDate: true,
       select: [
         'userId',
