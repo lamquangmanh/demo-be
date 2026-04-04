@@ -12,7 +12,10 @@ export class GetUserUseCase {
   @Inject(USER_REPOSITORY)
   private readonly userRepo: UserRepository;
 
-  async execute(userId: string): Promise<UserEntity | null> {
+  async execute(
+    userId: string,
+    withRelations: boolean = false,
+  ): Promise<UserEntity | null> {
     // get user
     const user = await this.userRepo.findOne(
       { userId },
@@ -31,8 +34,26 @@ export class GetUserUseCase {
           'deletedAt',
           'deletedUserId',
         ],
+        relations: withRelations ? ['userRoles', 'userRoles.role'] : [],
       },
     );
-    return this.userRepo.convertDateToISOString(user);
+
+    const userData = this.userRepo.convertDateToISOString(user);
+    if (!userData) {
+      return null;
+    }
+
+    const roleIds = Array.isArray(userData.userRoles)
+      ? userData.userRoles
+          .map((item: any) => item?.roleId)
+          .filter((roleId: string | undefined): roleId is string =>
+            Boolean(roleId),
+          )
+      : [];
+
+    return {
+      ...userData,
+      roleIds,
+    };
   }
 }

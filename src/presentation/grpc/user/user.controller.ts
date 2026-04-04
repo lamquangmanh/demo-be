@@ -38,7 +38,7 @@ export class UserController {
 
   @GrpcMethod('UserService', 'GetUser')
   async getUser({ userId }): Promise<UserEntity | null> {
-    return await this.getUserUseCase.execute(userId);
+    return await this.getUserUseCase.execute(userId, true);
   }
 
   @GrpcMethod('UserService', 'GetUsers')

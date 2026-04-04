@@ -31,7 +31,7 @@ export class VerifyUseCase {
   @Inject(REDIS_CLIENT)
   private readonly redis: Redis;
 
-  async validate(input: VerifyRequestDto): Promise<any> {
+  async validate(input: VerifyRequestDto): Promise<{ userId: string }> {
     //  extract the token from the request
     const token = input.accessToken;
     if (!token) {
@@ -53,6 +53,15 @@ export class VerifyUseCase {
         message: 'Invalid token',
         extra: {
           fields: [{ field: 'accessToken', error: 'Invalid token' }],
+        },
+      });
+    }
+    if (typeof decoded.userId !== 'string' || decoded.userId.length === 0) {
+      throw new GrpcCustomException({
+        code: status.UNAUTHENTICATED,
+        message: 'Invalid token payload',
+        extra: {
+          fields: [{ field: 'accessToken', error: 'Invalid token payload' }],
         },
       });
     }
@@ -103,7 +112,7 @@ export class VerifyUseCase {
     userId: string,
     input: VerifyRequestDto,
   ): Promise<boolean> {
-    // finc action by userId on redis
+    // find action by userId on redis
     let actions: any = [];
     const redisKey = USER_ACTIONS_KEY.replace('{userId}', userId);
     const redisActionData = await this.redis.get(redisKey);
@@ -128,25 +137,34 @@ export class VerifyUseCase {
       );
 
       // get all actions of the user
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      actions = user.userRoles.reduce((acc, userRole) => {
-        const permissions = userRole.role.permissions.map((permission) => {
-          return {
-            resource: {
-              name: permission.resource.name,
-            },
-            action: {
-              name: permission.action.name,
-              description: permission.action.description,
-              requestType: permission.action.requestType,
-              url: permission.action.url,
-              method: permission.action.method,
-            },
-          };
-        });
-        return [...acc, ...permissions];
-      }, []);
+      const userRoles = user?.userRoles ?? [];
+      actions = userRoles.flatMap((userRole) => {
+        const permissions = userRole.role?.permissions ?? [];
+
+        return permissions
+          .map((permission) => {
+            const resource = permission.resource;
+            const action = permission.action;
+
+            if (!resource || !action) {
+              return null;
+            }
+
+            return {
+              resource: {
+                name: resource.name,
+              },
+              action: {
+                name: action.name,
+                description: action.description,
+                requestType: action.requestType,
+                url: action.url,
+                method: action.method,
+              },
+            };
+          })
+          .filter((item): item is NonNullable<typeof item> => item !== null);
+      });
 
       // set the actions to redis
       await this.redis.set(redisKey, JSON.stringify(actions), 'EX', 60 * 60);

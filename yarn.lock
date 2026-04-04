@@ -924,10 +924,10 @@
     ts-proto "^2.7.0"
     ts-protoc-gen "^0.15.0"
 
-"@lamquangmanh/protobuf@^0.0.36":
-  version "0.0.36"
-  resolved "https://npm.pkg.github.com/download/@lamquangmanh/protobuf/0.0.36/3ac93dd9b271452f2cd9a4d2e6ad5f59b17ccaef#3ac93dd9b271452f2cd9a4d2e6ad5f59b17ccaef"
-  integrity sha512-tsVlYlv/9QmmdyRGXgMS9kMzGWYd2m/cyM+oykDJ16SdPuwOPhQUDdhszppgvOVID3l1NCjfkw+dlbBeYVFqHw==
+"@lamquangmanh/protobuf@^0.0.37":
+  version "0.0.37"
+  resolved "https://npm.pkg.github.com/download/@lamquangmanh/protobuf/0.0.37/1721a7c1944562f514c668326de58f229b84f5ca#1721a7c1944562f514c668326de58f229b84f5ca"
+  integrity sha512-Iqn7QKkulo78WfxwQCLO1EmuY25fSI6EFC/cuSFs05bOxiCn49WbfdgeqLZx7tX4HhmgnojPk+wsziZUlVW8MQ==
   dependencies:
     "@bufbuild/protobuf" "^2.2.5"
     "@lamquangmanh/protobuf" "^0.0.34"

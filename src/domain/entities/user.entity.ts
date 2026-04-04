@@ -1,5 +1,6 @@
 import { UserStatus } from '@/common/constants';
 import { BaseEntity } from './base.entity';
+import { UserRoleEntity } from './user-role.entity';
 
 export interface UserEntity extends BaseEntity {
   userId: string;
@@ -9,4 +10,6 @@ export interface UserEntity extends BaseEntity {
   phone?: string;
   avatar?: string;
   status: UserStatus;
+  roleIds?: string[];
+  userRoles?: UserRoleEntity[];
 }
